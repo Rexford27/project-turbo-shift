@@ -1,0 +1,11 @@
+Model Information:
+* title:	Aircraft tractor lowpoly model
+* source:	https://sketchfab.com/3d-models/aircraft-tractor-lowpoly-model-2e9a078c365243c888f4c70f85be7b85
+* author:	propmaker1 (https://sketchfab.com/menX1151)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Aircraft tractor lowpoly model" (https://sketchfab.com/3d-models/aircraft-tractor-lowpoly-model-2e9a078c365243c888f4c70f85be7b85) by propmaker1 (https://sketchfab.com/menX1151) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

@@ -1,0 +1,11 @@
+Model Information:
+* title:	Mig-15 low poly
+* source:	https://sketchfab.com/3d-models/mig-15-low-poly-9cf87d05be5b4609a9101c2221fcfa7f
+* author:	Pixel (https://sketchfab.com/stefan.lengyel1)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Mig-15 low poly" (https://sketchfab.com/3d-models/mig-15-low-poly-9cf87d05be5b4609a9101c2221fcfa7f) by Pixel (https://sketchfab.com/stefan.lengyel1) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

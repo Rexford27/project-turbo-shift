@@ -1,0 +1,130 @@
+[gd_scene format=3 uid="uid://dgjfkt1oermj"]
+
+[ext_resource type="Script" uid="uid://cm68us3uopqw8" path="res://scripts/player_vehicle/ControlFrame.gd" id="1_56pn0"]
+[ext_resource type="PackedScene" uid="uid://bt81ommfk5n6v" path="res://scenes/vehicles/demo_plane.tscn" id="2_dyod8"]
+[ext_resource type="Script" uid="uid://dj7iy5fn73273" path="res://scripts/player_vehicle/base_vehicle_physics.gd" id="3_l8wbd"]
+[ext_resource type="Script" uid="uid://dns0o41tbepbu" path="res://scripts/player_vehicle/vehicle_visual_controller.gd" id="4_ndhrs"]
+[ext_resource type="PackedScene" uid="uid://cs6syvc52ti0u" path="res://scenes/vehicles/demo_car.tscn" id="4_pr8a0"]
+[ext_resource type="PackedScene" uid="uid://ceg5ojg0d61lb" path="res://scenes/vehicles/demo_boat.tscn" id="5_tny4n"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_5k18u"]
+radius = 1.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_l8wbd"]
+radius = 1.0
+height = 2.0
+
+[node name="PlayerVehicle" type="Node3D" unique_id=1217741396]
+editor_description = "├── CurrentVehicleForm
+├── CameraTarget
+├── RaceData
+├── InputHandler
+└── StateMachine"
+
+[node name="vehicleRigidBody" type="RigidBody3D" parent="." unique_id=624210202]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0518713, 0)
+gravity_scale = 0.0
+
+[node name="kart_shape" type="CollisionShape3D" parent="vehicleRigidBody" unique_id=1814721224]
+shape = SubResource("SphereShape3D_5k18u")
+
+[node name="boat_shape" type="CollisionShape3D" parent="vehicleRigidBody" unique_id=1666172551]
+shape = SubResource("SphereShape3D_5k18u")
+
+[node name="air_shape" type="CollisionShape3D" parent="vehicleRigidBody" unique_id=1657377663]
+shape = SubResource("SphereShape3D_5k18u")
+
+[node name="SuspensionRaycasts" type="Node3D" parent="vehicleRigidBody" unique_id=1567030465]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25773025, 0)
+
+[node name="back_left" type="RayCast3D" parent="vehicleRigidBody/SuspensionRaycasts" unique_id=1114955934]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -1)
+
+[node name="back_right" type="RayCast3D" parent="vehicleRigidBody/SuspensionRaycasts" unique_id=785070834]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -1)
+
+[node name="front_left" type="RayCast3D" parent="vehicleRigidBody/SuspensionRaycasts" unique_id=1400662975]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 1)
+
+[node name="front_right" type="RayCast3D" parent="vehicleRigidBody/SuspensionRaycasts" unique_id=1062069701]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1)
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="vehicleRigidBody" unique_id=4099091]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1944939, 0)
+visible = false
+mesh = SubResource("SphereMesh_l8wbd")
+
+[node name="ControlFrame" type="Node3D" parent="." unique_id=526377521 node_paths=PackedStringArray("follow_target", "camera_pivot", "gameplay_camera")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 1.8787484, -3.9524097)
+script = ExtResource("1_56pn0")
+follow_target = NodePath("../vehicleRigidBody")
+snap_to_target = false
+camera_pivot = NodePath("camera_pivot")
+gameplay_camera = NodePath("camera_pivot/Camera3D")
+enable_flight = true
+
+[node name="CameraTarget" type="Node3D" parent="ControlFrame" unique_id=581244945]
+
+[node name="ground_ray" type="RayCast3D" parent="ControlFrame" unique_id=850087651]
+editor_description = "detects the floor so that the control frame dont stay flat on slops 
+it redgisters gorund and moves up the control frame 
+"
+debug_shape_custom_color = Color(7.70092e-07, 0, 0.9915467, 1)
+debug_shape_thickness = 5
+
+[node name="camera_pivot" type="Node3D" parent="ControlFrame" unique_id=218489848]
+
+[node name="Camera3D" type="Camera3D" parent="ControlFrame/camera_pivot" unique_id=55472363]
+
+[node name="vehicle_controller" type="Node3D" parent="." unique_id=2001750155]
+editor_description = "controls how the vehicle behaves 
+"
+
+[node name="VehicleStats" type="Node3D" parent="vehicle_controller" unique_id=2017704367]
+editor_description = "hold vairables for raw numbers/tuning values
+for the vehicle
+"
+
+[node name="kart_movement" type="Node3D" parent="vehicle_controller" unique_id=1061434087]
+editor_description = "Handles kart movment
+mode-specific behavior"
+
+[node name="boat_movement" type="Node3D" parent="vehicle_controller" unique_id=1980632776]
+editor_description = "handles boat mvoment
+mode-specific behavior"
+
+[node name="air_movement" type="Node3D" parent="vehicle_controller" unique_id=2133385376]
+editor_description = "handles air movment
+mode-specific behavior"
+
+[node name="BaseVehiclePhysics" type="Node3D" parent="vehicle_controller" unique_id=33358319 node_paths=PackedStringArray("body", "control_frame")]
+editor_description = "the Engine
+shared physics logic across kart, boat and plane"
+script = ExtResource("3_l8wbd")
+body = NodePath("../../vehicleRigidBody")
+control_frame = NodePath("../../ControlFrame")
+
+[node name="VehicleStateMachine" type="Node3D" parent="." unique_id=13966354]
+editor_description = " decides which mode is active"
+
+[node name="visualController" type="Node3D" parent="." unique_id=69499489 node_paths=PackedStringArray("body", "control_frame", "visual_body", "visual_root")]
+script = ExtResource("4_ndhrs")
+body = NodePath("../vehicleRigidBody")
+control_frame = NodePath("../ControlFrame")
+visual_body = NodePath("../Visuals/kart_visual")
+visual_root = NodePath("../Visuals")
+
+[node name="Visuals" type="Node3D" parent="." unique_id=1796811032]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45397413, 0)
+
+[node name="kart_visual" type="Node3D" parent="Visuals" unique_id=221343216]
+
+[node name="demo_car" parent="Visuals/kart_visual" unique_id=2125576533 instance=ExtResource("4_pr8a0")]
+
+[node name="boat_visual" type="Node3D" parent="Visuals" unique_id=1272002066]
+
+[node name="demo_boat" parent="Visuals/boat_visual" unique_id=306711224 instance=ExtResource("5_tny4n")]
+
+[node name="air_visual" type="Node3D" parent="Visuals" unique_id=118341293]
+
+[node name="demo_plane" parent="Visuals/air_visual" unique_id=1833569769 instance=ExtResource("2_dyod8")]
