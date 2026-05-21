@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cqovbe8mefpb1"]
 
 [ext_resource type="Texture2D" uid="uid://38eq1pvu5ovv" path="res://assets/textures/texture_07.png" id="1_pvua8"]
+[ext_resource type="Material" uid="uid://cb2wandx24jff" path="res://assets/materials/12mx12m.tres" id="1_yxiyd"]
 [ext_resource type="PackedScene" uid="uid://dgjfkt1oermj" path="res://scenes/players/PlayerVehicle.tscn" id="2_yxiyd"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_yxiyd"]
@@ -15,10 +16,74 @@ background_mode = 2
 sky = SubResource("Sky_3gcn2")
 tonemap_mode = 2
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yxiyd"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3gcn2"]
+albedo_color = Color(0.95397514, 0.6126805, 1.540184e-06, 1)
 albedo_texture = ExtResource("1_pvua8")
 uv1_scale = Vector3(-0.02, -0.02, -0.02)
 uv1_triplanar = true
+
+[sub_resource type="PrismMesh" id="PrismMesh_3gcn2"]
+material = SubResource("StandardMaterial3D_3gcn2")
+left_to_right = 0.0
+size = Vector3(25, 6, 25)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uqql8"]
+albedo_color = Color(0.95397514, 0.6126805, 1.540184e-06, 1)
+albedo_texture = ExtResource("1_pvua8")
+uv1_scale = Vector3(-0.02, -0.02, -0.02)
+uv1_triplanar = true
+
+[sub_resource type="PrismMesh" id="PrismMesh_uqql8"]
+material = SubResource("StandardMaterial3D_uqql8")
+left_to_right = 0.0
+size = Vector3(25, 10, 25)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p6q60"]
+albedo_color = Color(0.95397514, 0.6126805, 1.540184e-06, 1)
+albedo_texture = ExtResource("1_pvua8")
+uv1_scale = Vector3(-0.02, -0.02, -0.02)
+uv1_triplanar = true
+
+[sub_resource type="PrismMesh" id="PrismMesh_p6q60"]
+material = SubResource("StandardMaterial3D_p6q60")
+left_to_right = 0.0
+size = Vector3(25, 4, 25)
+
+[sub_resource type="PrismMesh" id="PrismMesh_wt7y3"]
+material = SubResource("StandardMaterial3D_p6q60")
+left_to_right = 0.0
+size = Vector3(12, 4, 12)
+
+[sub_resource type="PrismMesh" id="PrismMesh_ut4gf"]
+material = SubResource("StandardMaterial3D_p6q60")
+left_to_right = 0.0
+size = Vector3(12, 2, 12)
+
+[sub_resource type="PrismMesh" id="PrismMesh_t363p"]
+material = SubResource("StandardMaterial3D_p6q60")
+left_to_right = 0.0
+size = Vector3(12, 6, 12)
+
+[sub_resource type="PrismMesh" id="PrismMesh_s037o"]
+material = SubResource("StandardMaterial3D_p6q60")
+left_to_right = 0.0
+size = Vector3(12, 8, 12)
+
+[sub_resource type="PrismMesh" id="PrismMesh_x0hna"]
+material = SubResource("StandardMaterial3D_p6q60")
+left_to_right = 0.0
+size = Vector3(12, 4, 6)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rpdji"]
+albedo_color = Color(0.95397514, 0.6126805, 1.540184e-06, 1)
+albedo_texture = ExtResource("1_pvua8")
+uv1_scale = Vector3(-0.02, -0.02, -0.02)
+uv1_triplanar = true
+
+[sub_resource type="PrismMesh" id="PrismMesh_rpdji"]
+material = SubResource("StandardMaterial3D_rpdji")
+left_to_right = 0.0
+size = Vector3(25, 2, 25)
 
 [node name="GymPhysicsTest" type="Node3D" unique_id=579894884]
 
@@ -37,43 +102,103 @@ environment = SubResource("Environment_uqql8")
 [node name="road_scale_25" type="CSGBox3D" parent="track" unique_id=1626682409]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8685446, 0)
 size = Vector3(25, 1, 25)
-material = SubResource("StandardMaterial3D_yxiyd")
+material = ExtResource("1_yxiyd")
 
 [node name="large_building_01" type="CSGBox3D" parent="track" unique_id=92333603]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 99.66752, 5.5473166, 0)
 use_collision = true
 size = Vector3(25, 10.357544, 25)
-material = SubResource("StandardMaterial3D_yxiyd")
+material = ExtResource("1_yxiyd")
 
 [node name="large_building_02" type="CSGBox3D" parent="track" unique_id=1034147219]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 99.66752, 19.087326, 113.24251)
 use_collision = true
 size = Vector3(25, 37.43756, 25)
-material = SubResource("StandardMaterial3D_yxiyd")
+material = ExtResource("1_yxiyd")
 
 [node name="large_building_03" type="CSGBox3D" parent="track" unique_id=402246734]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -98.32931, 45.21335, 113.24251)
 use_collision = true
 size = Vector3(25, 89.689606, 25)
-material = SubResource("StandardMaterial3D_yxiyd")
+material = ExtResource("1_yxiyd")
 
 [node name="large_building_04" type="CSGBox3D" parent="track" unique_id=371399458]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -98.32931, 74.709404, -66.201096)
 use_collision = true
 size = Vector3(25, 148.68172, 25)
-material = SubResource("StandardMaterial3D_yxiyd")
+material = ExtResource("1_yxiyd")
 
 [node name="large_building_05" type="CSGBox3D" parent="track" unique_id=1001628981]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 120.171234, 74.709404, -158.94368)
 use_collision = true
 size = Vector3(25, 148.68172, 25)
-material = SubResource("StandardMaterial3D_yxiyd")
+material = ExtResource("1_yxiyd")
 
 [node name="flooor" type="CSGBox3D" parent="track" unique_id=1934869465]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.038238525, -0.014453888, -0.02148056)
 use_collision = true
 size = Vector3(500, 1, 500)
-material = SubResource("StandardMaterial3D_yxiyd")
+material = ExtResource("1_yxiyd")
+
+[node name="ramp_01" type="CSGMesh3D" parent="track" unique_id=1058676974]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 37.26723, 3.5790071, -50.295395)
+use_collision = true
+mesh = SubResource("PrismMesh_3gcn2")
+
+[node name="ramp_03" type="CSGMesh3D" parent="track" unique_id=762788336]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 37.26723, 5.579007, -25.295395)
+use_collision = true
+mesh = SubResource("PrismMesh_uqql8")
+
+[node name="ramp_02" type="CSGMesh3D" parent="track" unique_id=1766717055]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 37.267, 2.5, -75.295)
+use_collision = true
+mesh = SubResource("PrismMesh_p6q60")
+
+[node name="ramp_05" type="CSGMesh3D" parent="track" unique_id=1904033807]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 105.267, 2.5, -81.295)
+use_collision = true
+mesh = SubResource("PrismMesh_wt7y3")
+
+[node name="ramp_08" type="CSGMesh3D" parent="track" unique_id=1179645012]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 105.267, 1.5, -105.295)
+use_collision = true
+mesh = SubResource("PrismMesh_ut4gf")
+
+[node name="ramp_06" type="CSGMesh3D" parent="track" unique_id=1776462010]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 105.267, 3.5, -56.295)
+use_collision = true
+mesh = SubResource("PrismMesh_t363p")
+
+[node name="ramp_07" type="CSGMesh3D" parent="track" unique_id=1946062722]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 105.267, 4.5, -32.295)
+use_collision = true
+mesh = SubResource("PrismMesh_s037o")
+
+[node name="ramp_09" type="CSGMesh3D" parent="track" unique_id=178963418]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 155.267, 2.5, -81.295)
+use_collision = true
+mesh = SubResource("PrismMesh_x0hna")
+
+[node name="ramp_10" type="CSGMesh3D" parent="track" unique_id=1973491180]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 153.267, 1.5, -105.295)
+use_collision = true
+mesh = SubResource("PrismMesh_x0hna")
+
+[node name="ramp_11" type="CSGMesh3D" parent="track" unique_id=1917376691]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 155.267, 2.5, -56.295)
+use_collision = true
+mesh = SubResource("PrismMesh_x0hna")
+
+[node name="ramp_12" type="CSGMesh3D" parent="track" unique_id=1763272347]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 155.267, 2.5, -32.295)
+use_collision = true
+mesh = SubResource("PrismMesh_x0hna")
+
+[node name="ramp_04" type="CSGMesh3D" parent="track" unique_id=223922074]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 37.267, 1.5, -100.295)
+use_collision = true
+mesh = SubResource("PrismMesh_rpdji")
 
 [node name="Props_Static" type="Node3D" parent="." unique_id=315033877]
 
