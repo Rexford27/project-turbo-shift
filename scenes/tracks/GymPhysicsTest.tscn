@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://38eq1pvu5ovv" path="res://assets/textures/texture_07.png" id="1_pvua8"]
 [ext_resource type="Material" uid="uid://cb2wandx24jff" path="res://assets/materials/12mx12m.tres" id="1_yxiyd"]
-[ext_resource type="PackedScene" uid="uid://dgjfkt1oermj" path="res://scenes/players/PlayerVehicle.tscn" id="2_yxiyd"]
+[ext_resource type="PackedScene" uid="uid://dgjfkt1oermj" path="res://scripts/player_vehicle/PlayerVehicle.tscn" id="2_yxiyd"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_yxiyd"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -137,7 +137,7 @@ material = ExtResource("1_yxiyd")
 [node name="flooor" type="CSGBox3D" parent="track" unique_id=1934869465]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.038238525, -0.014453888, -0.02148056)
 use_collision = true
-size = Vector3(500, 1, 500)
+size = Vector3(2000, 1, 20000)
 material = ExtResource("1_yxiyd")
 
 [node name="ramp_01" type="CSGMesh3D" parent="track" unique_id=1058676974]
@@ -227,8 +227,16 @@ mesh = SubResource("PrismMesh_rpdji")
 [node name="Player" type="Node3D" parent="." unique_id=1097212306]
 
 [node name="PlayerVehicle" parent="Player" unique_id=1217741396 instance=ExtResource("2_yxiyd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.361454, 0.84046817, 0)
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 25.361454, 4.8404684, 0)
+
+[node name="PhysicsBall" parent="Player/PlayerVehicle" index="1" unique_id=624210202]
+max_forward_speed = 50.0
+acceleration_force = 30.0
+side_grip_force = 90.0
+max_total_speed = 50.0
 
 [node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=1935860192]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.54744357, 0)
 size = Vector3(2, 1, 2)
+
+[editable path="Player/PlayerVehicle"]

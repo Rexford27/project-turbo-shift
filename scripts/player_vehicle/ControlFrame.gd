@@ -5,6 +5,7 @@ class_name ControlFrame
 # Input values
 # Other scripts can read these.
 # -------------------------
+@onready var physics_ball: PhysicsBallController = $"../PhysicsBall"
 
 var throttle_input: float = 0.0
 var steer_input: float = 0.0
@@ -75,7 +76,13 @@ func _physics_process(delta: float) -> void:
 	rotate_control_frame(delta)
 	handle_flight_pitch(delta)
 	update_camera(delta)
-
+	if physics_ball.linear_velocity.length() <= 3:
+		var x = (physics_ball.linear_velocity.length()/ physics_ball.max_total_speed)
+		x = clamp(x,0,1)
+		turn_speed = 2.8 * x
+		#print(x)\
+	else:
+		turn_speed = 2.8 
 
 func read_input() -> void:
 	throttle_input = Input.get_action_strength("accelerate") - Input.get_action_strength("brake")
