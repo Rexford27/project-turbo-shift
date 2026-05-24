@@ -32,8 +32,8 @@ var pitch_input: float = 0.0
 # -------------------------
 # Steering
 # -------------------------
-
-@export var turn_speed: float = 2.8
+@export var turn_speed_value: float = 2.8
+var turn_speed: float =2.8# 1.8
 
 
 # -------------------------
@@ -79,10 +79,10 @@ func _physics_process(delta: float) -> void:
 	if physics_ball.linear_velocity.length() <= 3:
 		var x = (physics_ball.linear_velocity.length()/ physics_ball.max_total_speed)
 		x = clamp(x,0,1)
-		turn_speed = 2.8 * x
+		turn_speed = turn_speed_value * x
 		#print(x)\
 	else:
-		turn_speed = 2.8 
+		turn_speed = turn_speed_value
 
 func read_input() -> void:
 	throttle_input = Input.get_action_strength("accelerate") - Input.get_action_strength("brake")

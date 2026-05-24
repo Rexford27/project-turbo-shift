@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://b0dl1mgbhy3fl"]
+
+[ext_resource type="Script" uid="uid://ngcu6qjdr15u" path="res://scripts/bouyancey_probe/buoyancy_probe.gd" id="1_ml5gp"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ml5gp"]
+albedo_color = Color(1, 0.16862746, 0, 1)
+
+[node name="BuoyancyProbe" type="Node3D" unique_id=1059010712]
+script = ExtResource("1_ml5gp")
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="." unique_id=1450429091]
+radius = 0.2
+material = SubResource("StandardMaterial3D_ml5gp")

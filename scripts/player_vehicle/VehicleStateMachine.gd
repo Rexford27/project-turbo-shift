@@ -129,7 +129,7 @@ func set_collision(collision_shape: CollisionShape3D, is_enabled: bool) -> void:
 func set_movement(movement_node: Node, is_enabled: bool) -> void:
 	if movement_node == null:
 		return
-
+	movement_node._ready()
 	movement_node.set_process(is_enabled)
 	movement_node.set_physics_process(is_enabled)
 	movement_node.set_physics_process(is_enabled)

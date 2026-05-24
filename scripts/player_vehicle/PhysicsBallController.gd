@@ -15,8 +15,8 @@ class_name PhysicsBallController
 @export var max_forward_speed: float = 28.0
 @export var max_reverse_speed: float = 20.0
 
-@export var acceleration_force: float = 12000.0
-@export var brake_force: float = 9000.0
+@export var acceleration_force: float = 30#12000.0
+@export var brake_force: float = 30#9000.0
 
 
 # -------------------------
@@ -25,7 +25,7 @@ class_name PhysicsBallController
 
 # Higher = less sideways sliding.
 # Lower = more drift/sliding.
-@export var side_grip_force: float = 10#8000.0
+@export var side_grip_force: float = 2#10#8000.0
 
 # Small drag to calm the ball down.
 @export var drag: float = 0.8
@@ -40,6 +40,10 @@ class_name PhysicsBallController
 @export var flight_direction_grip: float = 20#9000.0
 var flight_correction_time: float = 0.35
 var flight_deadzone_speed: float = 0.4
+
+func _ready() -> void:
+	center_of_mass_mode = RigidBody3D.CENTER_OF_MASS_MODE_CUSTOM
+	center_of_mass = Vector3(0, -1.5, 0) # lower than the body origin
 
 func _physics_process(delta: float) -> void:
 	if control_frame == null:

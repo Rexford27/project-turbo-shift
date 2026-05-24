@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://bgh5ehmpi06b" path="res://scripts/player_vehicle/visualBody.gd" id="4_8oxbr"]
 [ext_resource type="PackedScene" uid="uid://cs6syvc52ti0u" path="res://scenes/vehicles/demo_car.tscn" id="4_pr8a0"]
 [ext_resource type="PackedScene" uid="uid://ceg5ojg0d61lb" path="res://scenes/vehicles/demo_boat.tscn" id="5_tny4n"]
+[ext_resource type="PackedScene" uid="uid://b0dl1mgbhy3fl" path="res://scenes/environment/BuoyancyProbe.tscn" id="5_vn6y3"]
 [ext_resource type="Script" uid="uid://c2erpetairg5r" path="res://scripts/player_vehicle/VehicleStateMachine.gd" id="7_8oxbr"]
 [ext_resource type="Script" uid="uid://c808n58782jkk" path="res://scripts/player_vehicle/base_vehicle_physics.gd" id="7_yoipj"]
 [ext_resource type="Script" uid="uid://c2injon1wghmp" path="res://scripts/player_vehicle/kart_movement.gd" id="8_afemb"]
@@ -62,6 +63,10 @@ side_grip_force = 100.0
 [node name="kart_shape" type="CollisionShape3D" parent="PhysicsBall" unique_id=1814721224]
 shape = SubResource("SphereShape3D_5k18u")
 
+[node name="CSGMesh3D" type="CSGMesh3D" parent="PhysicsBall/kart_shape" unique_id=4099091]
+visible = false
+mesh = SubResource("SphereMesh_l8wbd")
+
 [node name="boat_shape" type="CollisionShape3D" parent="PhysicsBall" unique_id=1666172551]
 shape = SubResource("SphereShape3D_5k18u")
 
@@ -69,42 +74,48 @@ shape = SubResource("SphereShape3D_5k18u")
 shape = SubResource("SphereShape3D_5k18u")
 
 [node name="SuspensionRaycasts" type="Node3D" parent="PhysicsBall" unique_id=1567030465]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.73051983, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.8305199, 0)
 
 [node name="back_left" type="RayCast3D" parent="PhysicsBall/SuspensionRaycasts" unique_id=1114955934 node_paths=PackedStringArray("physics_ball")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1, -1)
+enabled = false
+exclude_parent = false
 target_position = Vector3(0, -2, 0)
 debug_shape_custom_color = Color(1, 1, 1, 1)
 script = ExtResource("3_qn886")
 physics_ball = NodePath("../..")
-rest_distance = 1.0
+rest_distance = 10.0
 spring_strength = 70.0
 damping = 3.0
 
 [node name="back_right" type="RayCast3D" parent="PhysicsBall/SuspensionRaycasts" unique_id=785070834 node_paths=PackedStringArray("physics_ball")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, -1)
+enabled = false
+exclude_parent = false
 target_position = Vector3(0, -2, 0)
 debug_shape_custom_color = Color(1, 1, 1, 1)
 script = ExtResource("3_qn886")
 physics_ball = NodePath("../..")
-rest_distance = 1.0
+rest_distance = 10.0
 spring_strength = 70.0
 damping = 3.0
 
 [node name="front_left" type="RayCast3D" parent="PhysicsBall/SuspensionRaycasts" unique_id=1400662975 node_paths=PackedStringArray("physics_ball")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1, 1)
+enabled = false
+exclude_parent = false
 target_position = Vector3(0, -2, 0)
 debug_shape_custom_color = Color(1, 1, 1, 1)
 script = ExtResource("3_qn886")
 physics_ball = NodePath("../..")
-rest_distance = 1.0
+rest_distance = 10.0
 spring_strength = 70.0
 damping = 2.0
 
 [node name="Trail3D" type="MeshInstance3D" parent="PhysicsBall/SuspensionRaycasts/front_left" unique_id=1904537347 node_paths=PackedStringArray("target", "camera")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 2.2147496, -1)
 script = ExtResource("8_nfduf")
-target = NodePath("../../../../VisualBody/VisualRoot")
+target = NodePath("../../../VisualBody/VisualRoot")
 use_parent_as_target = false
 end_width = 0.35
 motion_delta = 1.5
@@ -114,18 +125,58 @@ end_color = Color(1, 1, 1, 1)
 camera = NodePath("../../../../ControlFrame/camera_pivot/Camera3D")
 
 [node name="front_right" type="RayCast3D" parent="PhysicsBall/SuspensionRaycasts" unique_id=1062069701 node_paths=PackedStringArray("physics_ball")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1)
+enabled = false
+exclude_parent = false
 target_position = Vector3(0, -2, 0)
 debug_shape_custom_color = Color(1, 1, 1, 1)
 script = ExtResource("3_qn886")
 physics_ball = NodePath("../..")
-rest_distance = 1.0
+rest_distance = 10.0
 spring_strength = 70.0
 damping = 3.0
 
-[node name="CSGMesh3D" type="CSGMesh3D" parent="PhysicsBall" unique_id=4099091]
+[node name="BuoyancyProbe" parent="PhysicsBall" unique_id=1059010712 instance=ExtResource("5_vn6y3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, -0.90000004, -1)
+
+[node name="BuoyancyProbe2" parent="PhysicsBall" unique_id=509097673 instance=ExtResource("5_vn6y3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, -0.90000004, 0.70000005)
+
+[node name="BuoyancyProbe3" parent="PhysicsBall" unique_id=1022245698 instance=ExtResource("5_vn6y3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, -0.90000004, -1)
+
+[node name="BuoyancyProbe4" parent="PhysicsBall" unique_id=1825763812 instance=ExtResource("5_vn6y3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, -0.90000004, 0.70000005)
+
+[node name="VisualBody" type="Node3D" parent="PhysicsBall" unique_id=1796811032 node_paths=PackedStringArray("physics_ball", "control_frame", "visual_body")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.1, 0)
+script = ExtResource("4_8oxbr")
+physics_ball = NodePath("..")
+control_frame = NodePath("../../ControlFrame")
+visual_body = NodePath("VisualRoot")
+visual_position_offset = Vector3(0, -1.1, 0)
+model_yaw_offset_degrees = -180.0
+
+[node name="VisualRoot" type="Node3D" parent="PhysicsBall/VisualBody" unique_id=1807344459]
+
+[node name="kart_visual" type="Node3D" parent="PhysicsBall/VisualBody/VisualRoot" unique_id=221343216]
+
+[node name="demo_car" parent="PhysicsBall/VisualBody/VisualRoot/kart_visual" unique_id=2125576533 instance=ExtResource("4_pr8a0")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 0)
+
+[node name="boat_visual" type="Node3D" parent="PhysicsBall/VisualBody/VisualRoot" unique_id=1272002066]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 0)
+
+[node name="demo_boat" parent="PhysicsBall/VisualBody/VisualRoot/boat_visual" unique_id=306711224 instance=ExtResource("5_tny4n")]
+
+[node name="air_visual" type="Node3D" parent="PhysicsBall/VisualBody/VisualRoot" unique_id=118341293]
+
+[node name="demo_plane" parent="PhysicsBall/VisualBody/VisualRoot/air_visual" unique_id=1833569769 instance=ExtResource("2_dyod8")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 0)
+
+[node name="demo_boat" parent="PhysicsBall" unique_id=1032745825 instance=ExtResource("5_tny4n")]
+transform = Transform3D(-0.9659258, 0, 0.25881913, 0, 1, 0, -0.25881913, 0, -0.9659258, 0, -0.90000004, 0)
 visible = false
-mesh = SubResource("SphereMesh_l8wbd")
 
 [node name="vehicle_controller" type="Node3D" parent="." unique_id=2001750155]
 editor_description = "controls how the vehicle behaves 
@@ -168,9 +219,9 @@ physics_ball = NodePath("../../PhysicsBall")
 editor_description = " decides which mode is active"
 script = ExtResource("7_8oxbr")
 control_frame = NodePath("../ControlFrame")
-kart_visual = NodePath("../VisualBody/VisualRoot/kart_visual")
-boat_visual = NodePath("../VisualBody/VisualRoot/boat_visual")
-air_visual = NodePath("../VisualBody/VisualRoot/air_visual")
+kart_visual = NodePath("../PhysicsBall/VisualBody/VisualRoot/kart_visual")
+boat_visual = NodePath("../PhysicsBall/VisualBody/VisualRoot/boat_visual")
+air_visual = NodePath("../PhysicsBall/VisualBody/VisualRoot/air_visual")
 kart_shape = NodePath("../PhysicsBall/kart_shape")
 boat_shape = NodePath("../PhysicsBall/boat_shape")
 air_shape = NodePath("../PhysicsBall/air_shape")
@@ -178,43 +229,19 @@ kart_movement = NodePath("../vehicle_controller/kart_movement")
 boat_movement = NodePath("../vehicle_controller/boat_movement")
 air_movement = NodePath("../vehicle_controller/air_movement")
 
-[node name="Camera3D" type="Camera3D" parent="." unique_id=1708398501]
+[node name="DEBUG" type="Node" parent="." unique_id=642023799]
+
+[node name="Camera3D" type="Camera3D" parent="DEBUG" unique_id=1708398501]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1531718, 4.2244697)
 
-[node name="Control" type="Control" parent="." unique_id=1751561591]
+[node name="debug_text" type="Control" parent="." unique_id=1751561591]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("14_4ot41")
 
-[node name="speed" type="Label" parent="Control" unique_id=920211841]
+[node name="speed" type="Label" parent="debug_text" unique_id=920211841]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
-
-[node name="VisualBody" type="Node3D" parent="." unique_id=1796811032 node_paths=PackedStringArray("physics_ball", "control_frame", "visual_body")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.92022836, 0)
-script = ExtResource("4_8oxbr")
-physics_ball = NodePath("../PhysicsBall")
-control_frame = NodePath("../ControlFrame")
-visual_body = NodePath("VisualRoot")
-visual_position_offset = Vector3(0, -0.92, 0)
-model_yaw_offset_degrees = -180.0
-
-[node name="VisualRoot" type="Node3D" parent="VisualBody" unique_id=1807344459]
-
-[node name="kart_visual" type="Node3D" parent="VisualBody/VisualRoot" unique_id=221343216]
-
-[node name="demo_car" parent="VisualBody/VisualRoot/kart_visual" unique_id=2125576533 instance=ExtResource("4_pr8a0")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 0)
-
-[node name="boat_visual" type="Node3D" parent="VisualBody/VisualRoot" unique_id=1272002066]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 0)
-
-[node name="demo_boat" parent="VisualBody/VisualRoot/boat_visual" unique_id=306711224 instance=ExtResource("5_tny4n")]
-
-[node name="air_visual" type="Node3D" parent="VisualBody/VisualRoot" unique_id=118341293]
-
-[node name="demo_plane" parent="VisualBody/VisualRoot/air_visual" unique_id=1833569769 instance=ExtResource("2_dyod8")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 0)

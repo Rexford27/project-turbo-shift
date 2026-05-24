@@ -1,0 +1,86 @@
+[gd_scene format=3 uid="uid://d1ck0jy77puru"]
+
+[ext_resource type="Script" uid="uid://b8aj22yes2qet" path="res://scripts/water/StaticWorldOcean.gd" id="1_gtq2o"]
+[ext_resource type="Shader" uid="uid://cosysawfujnj" path="res://scripts/water/water.gdshader" id="2_6b8oq"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_6b8oq"]
+noise_type = 2
+frequency = 0.0024
+cellular_distance_function = 1
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_au12i"]
+noise = SubResource("FastNoiseLite_6b8oq")
+seamless = true
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_gtq2o"]
+noise_type = 2
+frequency = 0.0039
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_6b8oq"]
+noise = SubResource("FastNoiseLite_gtq2o")
+seamless = true
+as_normal_map = true
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_au12i"]
+noise_type = 2
+frequency = 0.0078
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ga324"]
+noise = SubResource("FastNoiseLite_au12i")
+seamless = true
+as_normal_map = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_26ipy"]
+render_priority = 0
+shader = ExtResource("2_6b8oq")
+shader_parameter/water_time = 79.50469950071917
+shader_parameter/deep_water_color = Color(0.015686275, 0.4, 0.5529412, 1)
+shader_parameter/shallow_water_color = Color(0, 0.6039216, 0.5019608, 1)
+shader_parameter/foam_color = Color(1, 1, 1, 1)
+shader_parameter/roughness_value = 0.0550000026125
+shader_parameter/specular_value = 1.0
+shader_parameter/large_normal_map = SubResource("NoiseTexture2D_6b8oq")
+shader_parameter/small_normal_map = SubResource("NoiseTexture2D_ga324")
+shader_parameter/large_normal_tile_size = 18.0
+shader_parameter/small_normal_tile_size = 4.5
+shader_parameter/large_normal_scroll = Vector2(0.025, 0.015)
+shader_parameter/small_normal_scroll = Vector2(-0.055, 0.035)
+shader_parameter/large_normal_strength = 1.146000054435
+shader_parameter/small_normal_strength = 1.0410000494475
+shader_parameter/foam_noise = SubResource("NoiseTexture2D_au12i")
+shader_parameter/foam_tile_size = 9.0
+shader_parameter/foam_strength = 0.366000017385
+shader_parameter/foam_cutoff = 0.7510000356725
+shader_parameter/swell_direction = Vector2(0.9805807, 0.19611615)
+shader_parameter/swell_amplitude = 0.24
+shader_parameter/swell_wavelength = 18.0
+shader_parameter/swell_speed = 1.45
+shader_parameter/swell_steepness = 0.34
+shader_parameter/rolling_direction = Vector2(0.24253564, 0.97014254)
+shader_parameter/rolling_amplitude = 0.13
+shader_parameter/rolling_wavelength = 8.0
+shader_parameter/rolling_speed = 1.05
+shader_parameter/rolling_steepness = 0.3
+shader_parameter/chop_direction = Vector2(-0.87157553, 0.4902612)
+shader_parameter/chop_amplitude = 0.04
+shader_parameter/chop_wavelength = 4.2
+shader_parameter/chop_speed = 0.85
+shader_parameter/chop_steepness = 0.22
+shader_parameter/cross_direction = Vector2(0.65493053, -0.7556891)
+shader_parameter/cross_amplitude = 0.022
+shader_parameter/cross_wavelength = 2.8
+shader_parameter/cross_speed = 0.65
+shader_parameter/cross_steepness = 0.16
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_yuiu7"]
+material = SubResource("ShaderMaterial_26ipy")
+size = Vector2(150, 150)
+subdivide_width = 50
+subdivide_depth = 50
+
+[node name="OceanWater" type="Node3D" unique_id=1627217357 node_paths=PackedStringArray("ocean_mesh")]
+script = ExtResource("1_gtq2o")
+ocean_mesh = NodePath("OceanMesh")
+
+[node name="OceanMesh" type="MeshInstance3D" parent="." unique_id=2081336455]
+mesh = SubResource("PlaneMesh_yuiu7")
