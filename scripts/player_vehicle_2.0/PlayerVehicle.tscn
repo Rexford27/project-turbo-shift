@@ -1,0 +1,185 @@
+[gd_scene format=3 uid="uid://bmrr2bmvgmuor"]
+
+[ext_resource type="Script" uid="uid://bbyo5f2ab7k2b" path="res://scripts/player_vehicle_2.0/ground_sensor.gd" id="1_74qqn"]
+[ext_resource type="PackedScene" uid="uid://cs6syvc52ti0u" path="res://scenes/vehicles/demo_car.tscn" id="1_eauhp"]
+[ext_resource type="Script" uid="uid://clqs63tvd52tt" path="res://scripts/player_vehicle_2.0/physics_ball.gd" id="2_tniqn"]
+[ext_resource type="PackedScene" uid="uid://ceg5ojg0d61lb" path="res://scenes/vehicles/demo_boat.tscn" id="2_xbu2n"]
+[ext_resource type="PackedScene" uid="uid://bt81ommfk5n6v" path="res://scenes/vehicles/demo_plane.tscn" id="3_8biou"]
+[ext_resource type="Script" uid="uid://cj3gmx5ev5g6b" path="res://scripts/player_vehicle_2.0/visual_body.gd" id="3_ypji7"]
+[ext_resource type="Script" uid="uid://beibe5mq03bqw" path="res://scripts/player_vehicle/suspension_ray.gd" id="4_c7lr4"]
+[ext_resource type="PackedScene" uid="uid://b0dl1mgbhy3fl" path="res://scenes/environment/BuoyancyProbe.tscn" id="5_74qqn"]
+[ext_resource type="Script" uid="uid://pel8chj6kh34" path="res://scripts/player_vehicle_2.0/race_cam.gd" id="9_tniqn"]
+[ext_resource type="Script" uid="uid://disl4arcfr5ke" path="res://scripts/player_vehicle_2.0/vehicle_stats.gd" id="9_xu6pt"]
+[ext_resource type="Script" uid="uid://dxgenvyvkxsjo" path="res://scripts/player_vehicle_2.0/node.gd" id="11_ypji7"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_tniqn"]
+friction = 0.0
+bounce = 0.1
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ypji7"]
+radius = 1.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_xu6pt"]
+radius = 1.0
+height = 2.0
+
+[node name="PlayerVehicle" type="Node3D" unique_id=1241110551]
+
+[node name="GroundSensor" type="Node3D" parent="." unique_id=744806189 node_paths=PackedStringArray("alignment_ray", "ground_ray", "physics_ball", "visual_body")]
+script = ExtResource("1_74qqn")
+alignment_ray = NodePath("AligmentRay")
+ground_ray = NodePath("groundRay")
+physics_ball = NodePath("../PhysicsBall")
+visual_body = NodePath("../PhysicsBall/VisualBody")
+align_visual_body = false
+
+[node name="AligmentRay" type="RayCast3D" parent="GroundSensor" unique_id=840772657]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+enabled = false
+target_position = Vector3(0, -30, 0)
+debug_shape_custom_color = Color(0, 0, 1, 1)
+
+[node name="groundRay" type="RayCast3D" parent="GroundSensor" unique_id=1870990184]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+debug_shape_custom_color = Color(0, 1, 0, 1)
+debug_shape_thickness = 3
+
+[node name="PhysicsBall" type="RigidBody3D" parent="." unique_id=78308645 node_paths=PackedStringArray("stats", "visual_body", "ground_sensor")]
+physics_material_override = SubResource("PhysicsMaterial_tniqn")
+angular_damp = 0.5
+script = ExtResource("2_tniqn")
+stats = NodePath("../VehicleStats")
+visual_body = NodePath("VisualBody")
+ground_sensor = NodePath("../GroundSensor")
+
+[node name="kart_shape" type="CollisionShape3D" parent="PhysicsBall" unique_id=2002290626]
+shape = SubResource("SphereShape3D_ypji7")
+debug_color = Color(0, 1, 1, 1)
+
+[node name="shape_debug_mesh" type="CSGMesh3D" parent="PhysicsBall/kart_shape" unique_id=342495759]
+mesh = SubResource("SphereMesh_xu6pt")
+
+[node name="VisualBody" type="Node3D" parent="PhysicsBall" unique_id=775594157 node_paths=PackedStringArray("physics_ball", "ground_sensor")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.6100001, 0)
+script = ExtResource("3_ypji7")
+physics_ball = NodePath("..")
+ground_sensor = NodePath("../../GroundSensor")
+position_offset = Vector3(0, -1.11, 0)
+enable_follow_ball = false
+
+[node name="VisualRoot" type="Node3D" parent="PhysicsBall/VisualBody" unique_id=751289032]
+
+[node name="kart_visual" type="Node3D" parent="PhysicsBall/VisualBody/VisualRoot" unique_id=42757547]
+
+[node name="demo_car" parent="PhysicsBall/VisualBody/VisualRoot/kart_visual" unique_id=2125576533 instance=ExtResource("1_eauhp")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 0)
+
+[node name="boat_visual" type="Node3D" parent="PhysicsBall/VisualBody/VisualRoot" unique_id=2053616600]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 0)
+visible = false
+
+[node name="demo_boat" parent="PhysicsBall/VisualBody/VisualRoot/boat_visual" unique_id=306711224 instance=ExtResource("2_xbu2n")]
+
+[node name="air_visual" type="Node3D" parent="PhysicsBall/VisualBody/VisualRoot" unique_id=49411756]
+visible = false
+
+[node name="demo_plane" parent="PhysicsBall/VisualBody/VisualRoot/air_visual" unique_id=1833569769 instance=ExtResource("3_8biou")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 0)
+
+[node name="SuspensionRays" type="Node3D" parent="PhysicsBall/VisualBody/VisualRoot" unique_id=218233937]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8894801, 0)
+
+[node name="back_left" type="RayCast3D" parent="PhysicsBall/VisualBody/VisualRoot/SuspensionRays" unique_id=1736545315 node_paths=PackedStringArray("physics_ball")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, -0.19999999, -0.7)
+debug_shape_custom_color = Color(1, 1, 1, 1)
+script = ExtResource("4_c7lr4")
+physics_ball = NodePath("../../../..")
+k = 55.0
+suspension_length = 1.0
+max_force = 55.0
+
+[node name="back_right" type="RayCast3D" parent="PhysicsBall/VisualBody/VisualRoot/SuspensionRays" unique_id=2115158284 node_paths=PackedStringArray("physics_ball")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, -0.19999999, -0.7)
+debug_shape_custom_color = Color(1, 1, 1, 1)
+script = ExtResource("4_c7lr4")
+physics_ball = NodePath("../../../..")
+k = 55.0
+suspension_length = 1.0
+max_force = 55.0
+
+[node name="front_left" type="RayCast3D" parent="PhysicsBall/VisualBody/VisualRoot/SuspensionRays" unique_id=532591366 node_paths=PackedStringArray("physics_ball")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, -0.19999999, 0.7)
+debug_shape_custom_color = Color(1, 1, 1, 1)
+script = ExtResource("4_c7lr4")
+physics_ball = NodePath("../../../..")
+k = 55.0
+suspension_length = 1.0
+max_force = 55.0
+
+[node name="front_right" type="RayCast3D" parent="PhysicsBall/VisualBody/VisualRoot/SuspensionRays" unique_id=894634134 node_paths=PackedStringArray("physics_ball")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, -0.19999999, 0.7)
+debug_shape_custom_color = Color(1, 1, 1, 1)
+script = ExtResource("4_c7lr4")
+physics_ball = NodePath("../../../..")
+k = 55.0
+suspension_length = 1.0
+max_force = 55.0
+
+[node name="BuoyancyProbes" type="Node3D" parent="PhysicsBall/VisualBody/VisualRoot" unique_id=1838389753]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.22, 0)
+
+[node name="BuoyancyProbe" parent="PhysicsBall/VisualBody/VisualRoot/BuoyancyProbes" unique_id=1059010712 node_paths=PackedStringArray("body") instance=ExtResource("5_74qqn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, -0.90000004, -1)
+body = NodePath("../../../..")
+buoyancy_strength = 70.0
+submersion_depth = 1.5
+vertical_damping = 4.0
+water_drag = 1.3
+
+[node name="BuoyancyProbe2" parent="PhysicsBall/VisualBody/VisualRoot/BuoyancyProbes" unique_id=257221842 node_paths=PackedStringArray("body") instance=ExtResource("5_74qqn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, -0.90000004, 0.70000005)
+body = NodePath("../../../..")
+buoyancy_strength = 70.0
+submersion_depth = 1.5
+vertical_damping = 4.0
+water_drag = 1.3
+
+[node name="BuoyancyProbe3" parent="PhysicsBall/VisualBody/VisualRoot/BuoyancyProbes" unique_id=1000922955 node_paths=PackedStringArray("body") instance=ExtResource("5_74qqn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, -0.90000004, -1)
+body = NodePath("../../../..")
+buoyancy_strength = 70.0
+submersion_depth = 1.5
+vertical_damping = 4.0
+water_drag = 1.3
+
+[node name="BuoyancyProbe4" parent="PhysicsBall/VisualBody/VisualRoot/BuoyancyProbes" unique_id=849021688 node_paths=PackedStringArray("body") instance=ExtResource("5_74qqn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, -0.90000004, 0.70000005)
+body = NodePath("../../../..")
+buoyancy_strength = 70.0
+submersion_depth = 1.5
+vertical_damping = 4.0
+water_drag = 1.3
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=587362525 node_paths=PackedStringArray("target", "speed_source")]
+transform = Transform3D(1, 0, 0, 0, 0.9986295, 0.05233596, 0, -0.05233596, 0.9986295, 0, 2, 5.5)
+current = true
+script = ExtResource("9_tniqn")
+target = NodePath("../PhysicsBall/VisualBody")
+speed_source = NodePath("../PhysicsBall")
+follow_speed = 20.0
+
+[node name="VehicleStats" type="Node" parent="." unique_id=1014325311]
+script = ExtResource("9_xu6pt")
+max_reverse_speed = 5.0
+max_total_speed = 70.0
+acceleration_force = 10.0
+reverse_force = 5.0
+brake_force = 20.0
+turn_speed = 1.4
+air_turn_speed = 1.4
+side_grip_force = 10.0
+ground_drag = 0.3
+ground_snap_force = 10.0
+
+[node name="Node" type="Node" parent="." unique_id=812848214]
+script = ExtResource("11_ypji7")

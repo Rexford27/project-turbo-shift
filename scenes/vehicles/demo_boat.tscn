@@ -4,6 +4,12 @@
 [ext_resource type="Texture2D" uid="uid://bs6mf2ejobic7" path="res://scenes/raw_imported_models/realistic_boat_pack_1__game_ready_hq_3d_models/textures/Boat_normal.png" id="2_6m8p1"]
 [ext_resource type="Texture2D" uid="uid://dkemih22ok4uo" path="res://scenes/raw_imported_models/realistic_boat_pack_1__game_ready_hq_3d_models/textures/Detail_baseColor.png" id="3_g8thk"]
 [ext_resource type="Texture2D" uid="uid://f21clbk0rn1y" path="res://scenes/raw_imported_models/realistic_boat_pack_1__game_ready_hq_3d_models/textures/Detail_normal.png" id="4_ecw68"]
+[ext_resource type="PackedScene" uid="uid://b0dl1mgbhy3fl" path="res://scenes/environment/BuoyancyProbe.tscn" id="5_3fv54"]
+[ext_resource type="PackedScene" uid="uid://folb74kv7csb" path="res://scenes/particles/trails.tscn" id="5_6m8p1"]
+[ext_resource type="PackedScene" uid="uid://ds5mvl7ln3xct" path="res://scenes/particles/sea_particles.tscn" id="6_g8thk"]
+[ext_resource type="PackedScene" uid="uid://bgregufidbvhe" path="res://scenes/particles/water.tscn" id="9_8ds2y"]
+[ext_resource type="Shader" uid="uid://bp42vqfhb7o2t" path="res://scripts/new_shader.gdshader" id="10_g75y4"]
+[ext_resource type="Texture2D" uid="uid://bk86kvhredswf" path="res://assets/models/vecteezy_water-fan-splash-with-droplets-on-black-background_2973443_sprite (1).png" id="11_ton1i"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_elbxl"]
 resource_name = "Boat"
@@ -277,6 +283,68 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_33t7m")
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g75y4"]
+render_priority = 0
+shader = ExtResource("10_g75y4")
+shader_parameter/sprite_texture = ExtResource("11_ton1i")
+shader_parameter/black_cutoff = 0.55
+shader_parameter/softness = 0.64
+shader_parameter/brightness_boost = 1.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2rcme"]
+atlas = ExtResource("11_ton1i")
+region = Rect2(5120, 2880, 2560, 1440)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ip52s"]
+atlas = ExtResource("11_ton1i")
+region = Rect2(7680, 2880, 2560, 1440)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_psoaf"]
+atlas = ExtResource("11_ton1i")
+region = Rect2(0, 4320, 2560, 1440)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7lwru"]
+atlas = ExtResource("11_ton1i")
+region = Rect2(2560, 4320, 2560, 1440)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kj2jb"]
+atlas = ExtResource("11_ton1i")
+region = Rect2(5120, 4320, 2560, 1440)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_g75y4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2rcme")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ip52s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_psoaf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7lwru")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kj2jb")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_3fv54"]
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_8ds2y"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_oamb3"]
+noise = SubResource("FastNoiseLite_8ds2y")
+color_ramp = SubResource("Gradient_3fv54")
+seamless = true
+invert = true
+
 [node name="demo_boat" type="Node3D" unique_id=306711224]
 
 [node name="SmallBoat" type="Node3D" parent="." unique_id=141632712]
@@ -322,6 +390,115 @@ mesh = SubResource("ArrayMesh_ikvo2")
 mesh = SubResource("ArrayMesh_ebsjd")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=408723705]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.54744357, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35919267, 0)
 visible = false
 size = Vector3(2, 1, 2)
+
+[node name="effects" parent="." unique_id=463935624 instance=ExtResource("9_8ds2y")]
+transform = Transform3D(0.6243606, 0, 0, 0, 0.6243606, 0, 0, 0, 0.6243606, 0, 0.87826705, 1.7435085)
+
+[node name="AnimatedSprite3D" parent="effects" index="2" unique_id=1850123783]
+transform = Transform3D(0.090678185, 0, 0, 0, 0.11, 0, 0, 0, 0.11, 0, 0.715992, -0.6505647)
+autoplay = "default"
+frame = 6
+frame_progress = 0.69370127
+
+[node name="AnimatedSprite3D2" parent="effects" index="3" unique_id=1861788934]
+transform = Transform3D(0.097482905, 0, 0, 0, 0.052044295, 0, 0, 0, 0.097482905, 0, -0.31249857, -0.90432894)
+frame_progress = 0.12547906
+
+[node name="AnimatedSprite3D6" type="AnimatedSprite3D" parent="effects" unique_id=1647122021]
+transform = Transform3D(-0.11132864, 0.006061428, -0.00028052035, 0, -0.0409093, -0.111963876, -0.0021453928, -0.31453934, 0.014556746, 0, -0.8212436, -3.1866322)
+material_override = SubResource("ShaderMaterial_g75y4")
+billboard = 1
+double_sided = false
+sprite_frames = SubResource("SpriteFrames_g75y4")
+autoplay = "default"
+
+[node name="AnimatedSprite3D5" type="AnimatedSprite3D" parent="effects" unique_id=1369607960]
+transform = Transform3D(0.097482905, 0, 0, 0, 0.052044295, 0, 0, 0, 0.097482905, 0, -0.31249857, -0.90432894)
+visible = false
+material_override = SubResource("ShaderMaterial_g75y4")
+billboard = 1
+double_sided = false
+sprite_frames = SubResource("SpriteFrames_g75y4")
+autoplay = "default"
+
+[node name="AnimatedSprite3D4" type="AnimatedSprite3D" parent="effects" unique_id=1620161716]
+transform = Transform3D(0.074271135, 0, 0.06314043, 0, 0.044539377, 0, -0.06314043, 0, 0.074271135, 0.5383506, -0.30890965, -1.8809144)
+material_override = SubResource("ShaderMaterial_g75y4")
+billboard = 1
+double_sided = false
+sprite_frames = SubResource("SpriteFrames_g75y4")
+autoplay = "default"
+
+[node name="AnimatedSprite3D7" type="AnimatedSprite3D" parent="effects" unique_id=768562094]
+transform = Transform3D(0.031276047, -0.0021706799, 0.09220714, 0.016305545, 0.043911118, -0.00057880685, -0.09087825, 0.00713157, 0.03162953, 0.12075972, -0.9150286, -5.6835556)
+material_override = SubResource("ShaderMaterial_g75y4")
+billboard = 1
+double_sided = false
+sprite_frames = SubResource("SpriteFrames_g75y4")
+autoplay = "default"
+
+[node name="AnimatedSprite3D8" type="AnimatedSprite3D" parent="effects" unique_id=760815428]
+transform = Transform3D(-0.023268795, 0.0020638958, 0.09455726, 0.016305545, 0.043911118, -0.0005788069, -0.093250245, 0.0071632033, -0.023696141, -0.058963828, -0.9150286, -5.6835556)
+material_override = SubResource("ShaderMaterial_g75y4")
+billboard = 1
+double_sided = false
+sprite_frames = SubResource("SpriteFrames_g75y4")
+autoplay = "default"
+
+[node name="AnimatedSprite3D10" type="AnimatedSprite3D" parent="effects" unique_id=856426927]
+transform = Transform3D(-0.005959686, -0.044456087, 4.253144e-09, 0, -1.946879e-09, -0.097482964, 0.09730056, -0.002722948, 2.6050598e-10, -0.23819059, -0.98693424, -5.9822254)
+material_override = SubResource("ShaderMaterial_g75y4")
+billboard = 1
+double_sided = false
+sprite_frames = SubResource("SpriteFrames_g75y4")
+autoplay = "default"
+
+[node name="AnimatedSprite3D11" type="AnimatedSprite3D" parent="effects" unique_id=446953770]
+transform = Transform3D(0.005959677, 0.0444561, -4.2531454e-09, -3.306232e-23, -1.946879e-09, -0.097482964, -0.09730056, 0.0027229434, -2.605053e-10, 0.32367927, -0.98693424, -5.947811)
+material_override = SubResource("ShaderMaterial_g75y4")
+billboard = 1
+double_sided = false
+sprite_frames = SubResource("SpriteFrames_g75y4")
+autoplay = "default"
+
+[node name="AnimatedSprite3D9" type="AnimatedSprite3D" parent="effects" unique_id=904747914]
+transform = Transform3D(0.054901827, 0, -0.0805525, 0, 0.044539377, 0, 0.0805525, 0, 0.054901827, -0.9182296, -0.3426361, -1.8809144)
+material_override = SubResource("ShaderMaterial_g75y4")
+billboard = 1
+double_sided = false
+sprite_frames = SubResource("SpriteFrames_g75y4")
+autoplay = "default"
+
+[node name="BuoyancyProbe2" parent="effects" unique_id=1059010712 instance=ExtResource("5_3fv54")]
+transform = Transform3D(1.6016386, 0, 0, 0, 1.6016386, 0, 0, 0, 1.6016386, 0, -1.0578487, -4.5810175)
+buoyancy_strength = 70.0
+submersion_depth = 2.0
+vertical_damping = 7.0
+water_drag = 1.3
+
+[node name="Trail3D" parent="effects/BuoyancyProbe2" unique_id=291877637 instance=ExtResource("5_6m8p1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4329701, 0.0850451, 0)
+start_width = 0.2
+end_width = 0.5
+lifespan = 0.2
+end_color = Color(1, 1, 1, 0.8039216)
+trail_texture = SubResource("NoiseTexture2D_oamb3")
+
+[node name="sea particles" parent="effects/BuoyancyProbe2/Trail3D" unique_id=800450522 instance=ExtResource("6_g8thk")]
+visible = false
+
+[node name="Trail3D2" parent="effects/BuoyancyProbe2" unique_id=1472482933 instance=ExtResource("5_6m8p1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.38234746, 0.0850451, 0)
+start_width = 0.2
+end_width = 0.5
+lifespan = 0.2
+end_color = Color(1, 1, 1, 0.8039216)
+trail_texture = SubResource("NoiseTexture2D_oamb3")
+
+[node name="sea particles" parent="effects/BuoyancyProbe2/Trail3D2" unique_id=658396769 instance=ExtResource("6_g8thk")]
+visible = false
+
+[editable path="effects"]

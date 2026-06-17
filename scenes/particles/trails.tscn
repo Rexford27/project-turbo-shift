@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://folb74kv7csb"]
+
+[ext_resource type="Script" uid="uid://7tbnmd6k23se" path="res://scripts/player_vehicle/Trail3D.gd" id="1_gkxxo"]
+
+[node name="Trail3D" type="MeshInstance3D" unique_id=291877637]
+script = ExtResource("1_gkxxo")
+end_width = 0.35
+motion_delta = 0.5
+lifespan = 0.5
+start_color = Color(1, 1, 1, 1)
+end_color = Color(1, 1, 1, 1)

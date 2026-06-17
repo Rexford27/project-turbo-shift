@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://ds5mvl7ln3xct"]
+
+[ext_resource type="Texture2D" uid="uid://beinjo01smvxe" path="res://assets/textures/kenney_particle-pack/PNG (Transparent)/smoke_07.png" id="1_kbvso"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gubc8"]
+transparency = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_kbvso")
+billboard_keep_scale = true
+grow = true
+use_fov_override = true
+stencil_flags = 2
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_86min"]
+material = SubResource("StandardMaterial3D_gubc8")
+
+[sub_resource type="Gradient" id="Gradient_l0tw8"]
+offsets = PackedFloat32Array(0, 0.71859294, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[node name="sea particles" type="Node3D" unique_id=800450522]
+
+[node name="CPUParticles3D2" type="CPUParticles3D" parent="." unique_id=301639786]
+amount = 120
+lifetime = 5.0
+lifetime_randomness = 0.4
+mesh = SubResource("PlaneMesh_86min")
+gravity = Vector3(0, 0, 0)
+color_ramp = SubResource("Gradient_l0tw8")

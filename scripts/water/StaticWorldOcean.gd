@@ -58,6 +58,7 @@ func _ready() -> void:
 	set_process(true)
 	_find_water_material()
 	_send_all_values_to_shader()
+	add_to_group("water")
 
 
 func _process(delta: float) -> void:

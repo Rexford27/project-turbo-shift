@@ -1,0 +1,309 @@
+[gd_scene format=3 uid="uid://cvtlx6exoxkdb"]
+
+[ext_resource type="Material" uid="uid://cb2wandx24jff" path="res://assets/materials/12mx12m.tres" id="1_arxl4"]
+[ext_resource type="Material" uid="uid://bynoo37x813qt" path="res://assets/materials/12mx12m_orange.tres" id="2_6hb1y"]
+[ext_resource type="Texture2D" uid="uid://38eq1pvu5ovv" path="res://assets/textures/texture_07.png" id="2_j7m0c"]
+[ext_resource type="PackedScene" uid="uid://d1ck0jy77puru" path="res://scenes/environment/OceanWater.tscn" id="3_6hb1y"]
+[ext_resource type="PackedScene" uid="uid://bmrr2bmvgmuor" path="res://scripts/player_vehicle_2.0/PlayerVehicle.tscn" id="4_arxl4"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_yxiyd"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_3gcn2"]
+sky_material = SubResource("ProceduralSkyMaterial_yxiyd")
+
+[sub_resource type="Environment" id="Environment_uqql8"]
+background_mode = 2
+sky = SubResource("Sky_3gcn2")
+tonemap_mode = 2
+
+[sub_resource type="PrismMesh" id="PrismMesh_7cjet"]
+material = ExtResource("2_6hb1y")
+left_to_right = 0.0
+size = Vector3(25, 6, 25)
+
+[sub_resource type="PrismMesh" id="PrismMesh_uqql8"]
+material = ExtResource("2_6hb1y")
+left_to_right = 0.0
+size = Vector3(25, 10, 25)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p6q60"]
+albedo_color = Color(0.95397514, 0.6126805, 1.540184e-06, 1)
+albedo_texture = ExtResource("2_j7m0c")
+uv1_scale = Vector3(-0.02, -0.02, -0.02)
+uv1_triplanar = true
+
+[sub_resource type="PrismMesh" id="PrismMesh_p6q60"]
+material = SubResource("StandardMaterial3D_p6q60")
+left_to_right = 0.0
+size = Vector3(25, 4, 25)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_hknvn"]
+material = ExtResource("2_6hb1y")
+height = 12.0
+
+[node name="GymPhysicsTest" type="Node3D" unique_id=579894884]
+
+[node name="world" type="Node3D" parent="." unique_id=1967899821]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="world" unique_id=1304263938]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+light_energy = 0.03
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="world" unique_id=1244842931]
+environment = SubResource("Environment_uqql8")
+
+[node name="track" type="Node3D" parent="." unique_id=1336507793]
+
+[node name="road_scale_25" type="CSGBox3D" parent="track" unique_id=1626682409]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.1314554, 0)
+size = Vector3(25, 1, 25)
+material = ExtResource("1_arxl4")
+
+[node name="large_building_01" type="CSGBox3D" parent="track" unique_id=92333603]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 99.66752, 5.5473166, 0)
+use_collision = true
+size = Vector3(25, 10.357544, 25)
+material = ExtResource("1_arxl4")
+
+[node name="large_building_02" type="CSGBox3D" parent="track" unique_id=1034147219]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 99.66752, 19.087326, 113.24251)
+use_collision = true
+size = Vector3(25, 37.43756, 25)
+material = ExtResource("1_arxl4")
+
+[node name="large_building_03" type="CSGBox3D" parent="track" unique_id=402246734]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -98.32931, 45.21335, 113.24251)
+use_collision = true
+size = Vector3(25, 89.689606, 25)
+material = ExtResource("1_arxl4")
+
+[node name="large_building_04" type="CSGBox3D" parent="track" unique_id=371399458]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -98.32931, 74.709404, -66.201096)
+use_collision = true
+size = Vector3(25, 148.68172, 25)
+material = ExtResource("1_arxl4")
+
+[node name="large_building_05" type="CSGBox3D" parent="track" unique_id=1001628981]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 120.171234, 74.709404, -158.94368)
+use_collision = true
+size = Vector3(25, 148.68172, 25)
+material = ExtResource("1_arxl4")
+
+[node name="flooor" type="CSGBox3D" parent="track" unique_id=1934869465]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5237274, -0.014450073, 0.12492752)
+use_collision = true
+size = Vector3(500, 1, 400)
+material = ExtResource("1_arxl4")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="track/flooor" unique_id=183177401]
+transform = Transform3D(1, 0, 0, 0, 0.9932052, 0.116376065, 0, -0.116376065, 0.9932052, 0, 1.0858058, -179.81258)
+operation = 2
+size = Vector3(30, 7.506, 130.37263)
+
+[node name="flooor2" type="CSGBox3D" parent="track" unique_id=520767069]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.038238525, -27.01445, 48.978516)
+use_collision = true
+size = Vector3(500, 53, 400)
+material = ExtResource("1_arxl4")
+
+[node name="ramp_01" type="CSGMesh3D" parent="track" unique_id=1058676974]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 37.26723, 3.5790071, -50.295395)
+use_collision = true
+mesh = SubResource("PrismMesh_7cjet")
+
+[node name="ramp_03" type="CSGMesh3D" parent="track" unique_id=762788336]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 37.26723, 5.579007, -25.295395)
+use_collision = true
+mesh = SubResource("PrismMesh_uqql8")
+
+[node name="ramp_02" type="CSGMesh3D" parent="track" unique_id=1766717055]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 37.267, 2.5, -75.295)
+use_collision = true
+mesh = SubResource("PrismMesh_p6q60")
+
+[node name="Props_Static" type="Node3D" parent="." unique_id=315033877]
+
+[node name="OceanWater" parent="Props_Static" unique_id=1627217357 instance=ExtResource("3_6hb1y")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, -2.04, 0)
+water_level = -2.04
+swell_amplitude = 1.72
+swell_wavelength = 100.0
+swell_speed = 2.0
+rolling_amplitude = 0.25
+rolling_wavelength = 50.0
+rolling_speed = 2.0
+chop_speed = 0.91
+cross_amplitude = 0.082
+
+[node name="suspension_test_01" type="Node3D" parent="Props_Static" unique_id=1101068865]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 1, 0)
+
+[node name="CSGCylinder3D" type="CSGMesh3D" parent="Props_Static/suspension_test_01" unique_id=1407982791]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 6, -0.8, 0)
+use_collision = true
+mesh = SubResource("CapsuleMesh_hknvn")
+
+[node name="CSGCylinder3D2" type="CSGMesh3D" parent="Props_Static/suspension_test_01" unique_id=1981619178]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 6, -0.8, -1)
+use_collision = true
+mesh = SubResource("CapsuleMesh_hknvn")
+
+[node name="CSGCylinder3D3" type="CSGMesh3D" parent="Props_Static/suspension_test_01" unique_id=1676377496]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 6, -0.8, -2)
+use_collision = true
+mesh = SubResource("CapsuleMesh_hknvn")
+
+[node name="CSGCylinder3D4" type="CSGMesh3D" parent="Props_Static/suspension_test_01" unique_id=2130149805]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 6, -0.8, -3)
+use_collision = true
+mesh = SubResource("CapsuleMesh_hknvn")
+
+[node name="suspension_test_02" type="Node3D" parent="Props_Static" unique_id=1496295342]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 1, -9)
+
+[node name="CSGCylinder3D" type="CSGMesh3D" parent="Props_Static/suspension_test_02" unique_id=1574269234]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 6, -0.8, 0)
+use_collision = true
+mesh = SubResource("CapsuleMesh_hknvn")
+
+[node name="CSGCylinder3D2" type="CSGMesh3D" parent="Props_Static/suspension_test_02" unique_id=1799413864]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 6, -0.8, -1)
+use_collision = true
+mesh = SubResource("CapsuleMesh_hknvn")
+
+[node name="CSGCylinder3D3" type="CSGMesh3D" parent="Props_Static/suspension_test_02" unique_id=1116704935]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 6, -0.8, -2)
+use_collision = true
+mesh = SubResource("CapsuleMesh_hknvn")
+
+[node name="CSGCylinder3D4" type="CSGMesh3D" parent="Props_Static/suspension_test_02" unique_id=2082442509]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 6, -0.8, -3)
+use_collision = true
+mesh = SubResource("CapsuleMesh_hknvn")
+
+[node name="suspension_test_03" type="Node3D" parent="Props_Static" unique_id=1164447729]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 1, 29)
+
+[node name="CSGCylinder3D" type="CSGMesh3D" parent="Props_Static/suspension_test_03" unique_id=1309014816]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 6, -0.8, 8)
+use_collision = true
+mesh = SubResource("CapsuleMesh_hknvn")
+
+[node name="CSGCylinder3D2" type="CSGMesh3D" parent="Props_Static/suspension_test_03" unique_id=67384766]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 6, -0.8, 5)
+use_collision = true
+mesh = SubResource("CapsuleMesh_hknvn")
+
+[node name="CSGCylinder3D3" type="CSGMesh3D" parent="Props_Static/suspension_test_03" unique_id=1660636179]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 6, -0.8, 1)
+use_collision = true
+mesh = SubResource("CapsuleMesh_hknvn")
+
+[node name="CSGCylinder3D4" type="CSGMesh3D" parent="Props_Static/suspension_test_03" unique_id=1206251084]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 6, -0.8, -3)
+use_collision = true
+mesh = SubResource("CapsuleMesh_hknvn")
+
+[node name="suspension_test_04" type="Node3D" parent="Props_Static" unique_id=1324433773]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36, 0.8109055, 0)
+
+[node name="CSGCylinder3D" type="CSGMesh3D" parent="Props_Static/suspension_test_04" unique_id=1201155826]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 6, -0.8, 0)
+use_collision = true
+mesh = SubResource("CapsuleMesh_hknvn")
+
+[node name="CSGCylinder3D2" type="CSGMesh3D" parent="Props_Static/suspension_test_04" unique_id=669027757]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 6, -0.8, -1)
+use_collision = true
+mesh = SubResource("CapsuleMesh_hknvn")
+
+[node name="CSGCylinder3D3" type="CSGMesh3D" parent="Props_Static/suspension_test_04" unique_id=1677175292]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 6, -0.8, -2)
+use_collision = true
+mesh = SubResource("CapsuleMesh_hknvn")
+
+[node name="CSGCylinder3D4" type="CSGMesh3D" parent="Props_Static/suspension_test_04" unique_id=292369250]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 6, -0.8, -3)
+use_collision = true
+mesh = SubResource("CapsuleMesh_hknvn")
+
+[node name="suspension_test_05" type="Node3D" parent="Props_Static" unique_id=605142933]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36, 0.8109055, -9)
+
+[node name="CSGCylinder3D" type="CSGMesh3D" parent="Props_Static/suspension_test_05" unique_id=1586239038]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 6, -0.8, 0)
+use_collision = true
+mesh = SubResource("CapsuleMesh_hknvn")
+
+[node name="CSGCylinder3D2" type="CSGMesh3D" parent="Props_Static/suspension_test_05" unique_id=122709327]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 6, -0.8, -1)
+use_collision = true
+mesh = SubResource("CapsuleMesh_hknvn")
+
+[node name="CSGCylinder3D3" type="CSGMesh3D" parent="Props_Static/suspension_test_05" unique_id=2043521686]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 6, -0.8, -2)
+use_collision = true
+mesh = SubResource("CapsuleMesh_hknvn")
+
+[node name="CSGCylinder3D4" type="CSGMesh3D" parent="Props_Static/suspension_test_05" unique_id=628663163]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 6, -0.8, -3)
+use_collision = true
+mesh = SubResource("CapsuleMesh_hknvn")
+
+[node name="suspension_test_06" type="Node3D" parent="Props_Static" unique_id=397198256]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36, 0.8109055, 29)
+
+[node name="CSGCylinder3D" type="CSGMesh3D" parent="Props_Static/suspension_test_06" unique_id=1138752852]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 6, -0.8, 8)
+use_collision = true
+mesh = SubResource("CapsuleMesh_hknvn")
+
+[node name="CSGCylinder3D2" type="CSGMesh3D" parent="Props_Static/suspension_test_06" unique_id=1817355603]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 6, -0.8, 5)
+use_collision = true
+mesh = SubResource("CapsuleMesh_hknvn")
+
+[node name="CSGCylinder3D3" type="CSGMesh3D" parent="Props_Static/suspension_test_06" unique_id=938946421]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 6, -0.8, 1)
+use_collision = true
+mesh = SubResource("CapsuleMesh_hknvn")
+
+[node name="CSGCylinder3D4" type="CSGMesh3D" parent="Props_Static/suspension_test_06" unique_id=1481888789]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 6, -0.8, -3)
+use_collision = true
+mesh = SubResource("CapsuleMesh_hknvn")
+
+[node name="Props_Physics" type="Node3D" parent="." unique_id=734582184]
+
+[node name="Gameplay" type="Node3D" parent="." unique_id=1407823359]
+
+[node name="StartGrid" type="Node3D" parent="Gameplay" unique_id=2058498140]
+
+[node name="Checkpoints" type="Node3D" parent="Gameplay" unique_id=373979616]
+
+[node name="RespawnPoints" type="Node3D" parent="Gameplay" unique_id=719572860]
+
+[node name="BoostPads" type="Node3D" parent="Gameplay" unique_id=1490608617]
+
+[node name="ItemBoxes" type="Node3D" parent="Gameplay" unique_id=792467722]
+
+[node name="LapTrigger" type="Node3D" parent="Gameplay" unique_id=2036209329]
+
+[node name="TransformGate" type="Node3D" parent="Gameplay" unique_id=559291048]
+
+[node name="Cameras" type="Node3D" parent="." unique_id=122649052]
+
+[node name="Player" type="Node3D" parent="." unique_id=1097212306]
+
+[node name="PlayerVehicle" parent="Player" unique_id=1241110551 instance=ExtResource("4_arxl4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+
+[node name="Debug" type="Node3D" parent="." unique_id=163013234]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Debug" unique_id=1935860192]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.45255637, -61)
+size = Vector3(2, 1, 2)

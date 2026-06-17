@@ -32,8 +32,11 @@ var pitch_input: float = 0.0
 # -------------------------
 # Steering
 # -------------------------
-@export var turn_speed_value: float = 2.8
-var turn_speed: float =2.8# 1.8
+@export var turn_speed_value: float = 1.2#2.8
+#var turn_speed: float =2.8# 1.8
+
+#boat
+var turn_speed: float = 1.2;
 
 
 # -------------------------

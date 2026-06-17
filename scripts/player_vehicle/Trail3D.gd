@@ -2,28 +2,31 @@ extends MeshInstance3D
 class_name Trail3D
 
 # -------------------------
-# Target
+# Main control
 # -------------------------
 
-@export var target: Node3D
-@export var use_parent_as_target: bool = true
-@export var position_offset: Vector3 = Vector3.ZERO
+# Turn this on/off from any script.
+@export var emitting: bool = true
+
+# Optional local offset from this node.
+# Example: (0, 0, -1) emits slightly behind the node.
+@export var emission_offset: Vector3 = Vector3.ZERO
 
 
 # -------------------------
-# Trail controls
+# Trail shape
 # -------------------------
-
-@export var trail_enabled: bool = true
-@export var use_input_to_show_trail: bool = true
-@export var drift_input_action: StringName = "drift"
 
 @export var start_width: float = 0.35
 @export var end_width: float = 0.05
 
+# Bigger = chunkier and cheaper.
+# Smaller = smoother but more points.
 @export var motion_delta: float = 0.25
+
 @export var lifespan: float = 0.7
 @export var max_points_per_segment: int = 40
+@export var max_segments: int = 8
 
 
 # -------------------------
@@ -35,17 +38,17 @@ class_name Trail3D
 
 
 # -------------------------
-# Texture / shader controls
+# Texture / shader
 # -------------------------
 
 @export var shader_material: ShaderMaterial
 @export var trail_texture: Texture2D
 
-# Lower = texture repeats more often.
-# Higher = texture stretches more.
+# Lower = repeats more often.
+# Higher = stretches more.
 @export var texture_repeat_distance: float = 0.8
 
-# These get passed to your shader.
+# These are passed to your shader if it has these uniforms.
 @export_range(-1.0, 1.0) var uv_rotation: float = 0.0
 @export var uv_spin_speed: float = 0.0
 @export var uv_scroll_speed: float = 0.0
@@ -55,6 +58,7 @@ class_name Trail3D
 # Camera
 # -------------------------
 
+# Optional. If empty, it uses the current viewport camera.
 @export var camera: Camera3D
 
 
@@ -63,65 +67,58 @@ class_name Trail3D
 # -------------------------
 
 var trail_mesh: ImmediateMesh
+var active_shader_material: ShaderMaterial
 
 var segments: Array = []
 
 var current_segment_index: int = -1
 var last_point: Vector3
 var has_last_point: bool = false
-var was_trailing: bool = false
+var was_emitting: bool = false
 
 
 func _ready() -> void:
 	trail_mesh = ImmediateMesh.new()
 	mesh = trail_mesh
 
-	if target == null and use_parent_as_target and get_parent() is Node3D:
-		target = get_parent()
-
-	set_as_top_level(true)
 	setup_material()
 
 
 func _process(delta: float) -> void:
-	if target == null:
-		return
-
 	update_shader_values()
 	age_segments(delta)
 
-	var should_make_trail := trail_enabled
+	if emitting:
+		var emit_position := get_emit_position()
 
-	if use_input_to_show_trail:
-		should_make_trail = trail_enabled and Input.is_action_pressed(drift_input_action)
-
-	if should_make_trail:
-		var target_position := target.global_position + position_offset
-		global_position = target_position
-
-		if not was_trailing:
+		if not was_emitting:
 			start_new_segment()
 			has_last_point = false
-			was_trailing = true
+			was_emitting = true
 
-		add_point_if_needed(target_position)
+		add_point_if_needed(emit_position)
 
 	else:
-		# Lift the pen so the next trail does not connect to the old one.
-		was_trailing = false
+		# Lift the pen.
+		# This prevents the next trail from connecting to the old one.
+		was_emitting = false
 		has_last_point = false
 		current_segment_index = -1
 
 	draw_trail()
 
 
+func get_emit_position() -> Vector3:
+	return global_transform.origin + (global_transform.basis * emission_offset)
+
+
 func setup_material() -> void:
 	if shader_material != null:
-		material_override = shader_material
+		active_shader_material = shader_material.duplicate()
+		material_override = active_shader_material
 		update_shader_values()
 		return
 
-	# Fallback material, just in case no shader material is assigned.
 	var mat := StandardMaterial3D.new()
 	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 	mat.vertex_color_use_as_albedo = true
@@ -136,15 +133,15 @@ func setup_material() -> void:
 
 
 func update_shader_values() -> void:
-	if shader_material == null:
+	if active_shader_material == null:
 		return
 
 	if trail_texture != null:
-		shader_material.set_shader_parameter("trail_texture", trail_texture)
+		active_shader_material.set_shader_parameter("trail_texture", trail_texture)
 
-	shader_material.set_shader_parameter("uv_rotation", uv_rotation)
-	shader_material.set_shader_parameter("uv_spin_speed", uv_spin_speed)
-	shader_material.set_shader_parameter("uv_scroll_speed", uv_scroll_speed)
+	active_shader_material.set_shader_parameter("uv_rotation", uv_rotation)
+	active_shader_material.set_shader_parameter("uv_spin_speed", uv_spin_speed)
+	active_shader_material.set_shader_parameter("uv_scroll_speed", uv_scroll_speed)
 
 
 func start_new_segment() -> void:
@@ -154,6 +151,10 @@ func start_new_segment() -> void:
 	})
 
 	current_segment_index = segments.size() - 1
+
+	if segments.size() > max_segments:
+		segments.remove_at(0)
+		current_segment_index = segments.size() - 1
 
 
 func add_point_if_needed(point: Vector3) -> void:
@@ -203,7 +204,6 @@ func age_segments(delta: float) -> void:
 
 			if s < current_segment_index:
 				current_segment_index -= 1
-
 			elif s == current_segment_index:
 				current_segment_index = -1
 				has_last_point = false
@@ -238,20 +238,18 @@ func draw_trail() -> void:
 
 			var age_percent: float = ages[i] / lifespan
 
-			var current_color := start_color.lerp(end_color, age_percent)
-			trail_mesh.surface_set_color(current_color)
+			var color := start_color.lerp(end_color, age_percent)
+			trail_mesh.surface_set_color(color)
 
-			var current_width = lerp(start_width, end_width, age_percent)
-			var right = width_direction * current_width
+			var width = lerp(start_width, end_width, age_percent)
+			var right = width_direction * width
 
 			var point_a: Vector3 = points[i] + right
 			var point_b: Vector3 = points[i] - right
 
-			var safe_repeat_distance = max(texture_repeat_distance, 0.01)
-			var uv_x = distance_along_trail / safe_repeat_distance
+			var repeat_distance = max(texture_repeat_distance, 0.01)
+			var uv_x = distance_along_trail / repeat_distance
 
-			# Keep UVs simple.
-			# The shader handles rotation/spin/scroll.
 			trail_mesh.surface_set_uv(Vector2(uv_x, 0.0))
 			trail_mesh.surface_add_vertex(to_local(point_a))
 
@@ -277,7 +275,7 @@ func clear_trail() -> void:
 	segments.clear()
 	current_segment_index = -1
 	has_last_point = false
-	was_trailing = false
+	was_emitting = false
 
 	if trail_mesh != null:
 		trail_mesh.clear_surfaces()

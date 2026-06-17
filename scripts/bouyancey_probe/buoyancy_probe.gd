@@ -2,17 +2,20 @@ extends Node3D
 class_name BuoyancyProbe
 
 @export var water: StaticWorldOcean
+@export var body: RigidBody3D
 
 @export_group("Buoyancy")
+
+
 @export var buoyancy_strength: float = 80.0
-@export var submersion_depth: float = 1.0
-@export var vertical_damping: float = 8.0
+@export var submersion_depth: float = 2.5
+@export var vertical_damping: float = 3.0#8.0
 @export var water_drag: float = 2.0
 
 @export_group("Debug")
 @export var print_debug: bool = false
 
-var body: RigidBody3D
+
 
 
 func _ready() -> void:
@@ -87,12 +90,15 @@ func _get_velocity_at_world_point(world_point: Vector3) -> Vector3:
 
 
 func _find_parent_rigidbody() -> RigidBody3D:
-	var current_node: Node = get_parent()
+	return body
 
-	while current_node != null:
-		if current_node is RigidBody3D:
-			return current_node
 
-		current_node = current_node.get_parent()
-
-	return null
+	#var current_node: Node = get_parent()
+#
+	#while current_node != null:
+		#if current_node is PhysicsBallController2 or RigidBody3D:
+			#return current_node
+#
+		#current_node = current_node.get_parent()
+#
+	#return null

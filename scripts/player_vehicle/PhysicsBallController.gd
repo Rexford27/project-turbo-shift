@@ -58,6 +58,7 @@ func _physics_process(delta: float) -> void:
 
 
 
+
 func apply_flight_direction_grip(delta: float) -> void:
 	# Direction the camera/control frame is looking.
 	var desired_direction := -control_frame.global_transform.basis.z.normalized()
@@ -99,6 +100,8 @@ func apply_drive_force(delta: float) -> void:
 
 	# Godot forward is usually -Z.
 	var forward_dir := -control_frame.global_transform.basis.z.normalized()
+	#var forward_dir = -$VisualBody/VisualRoot.global_transform.basis.z.normalized()
+	
 
 	var target_speed := max_forward_speed * throttle
 

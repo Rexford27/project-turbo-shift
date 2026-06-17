@@ -1,26 +1,74 @@
+@tool
 extends RayCast3D
-class_name SuspensionRay
+class_name SuspensionRay2
 
+@export_group("Suspension Setup")
+
+## The RigidBody3D that this suspension ray will push.
+## If left empty, the script tries to use the parent-parent node.
 @export var physics_ball: RigidBody3D
 
-# How high this ray wants to stay above the ground.
-@export var rest_distance: float = 0.8
+## Spring strength.
+## Higher values push the vehicle upward harder.
+## Increase this if the car sinks too much.
+@export var k: float = 60.0
 
-# Higher = pushes the ball up harder.
-@export var spring_strength: float = 60.0
+## Damping strength.
+## Higher values reduce bouncing.
+## Increase this if the car keeps bouncing after landing.
+@export var damping: float = 2.0
 
-# Higher = less bouncing.
-@export var damping: float = 8.0
+## Maximum suspension distance.
+## This controls how far down the ray checks for the ground.
+@export var suspension_length: float = 0.9:
+	set(value):
+		suspension_length = max(value, 0.01)
+		_update_ray_length()
 
-# Maximum force this ray can apply.
-@export var max_force: float = 90.0
+## Maximum force this suspension ray can apply.
+## Increase this if the suspension feels too weak.
+## Decrease this if the car launches upward too hard.
+@export var max_force: float = 200.0
+
+## Turns this suspension ray on or off.
+## Disable this if you want this ray to stop applying suspension force.
+@export var active: bool = true:
+	set(value):
+		active = value
+		if is_inside_tree():
+			set_physics_process(active)
+
+@export_group("")
+
+# === INTERNALS ===
+var rest_length: float
 
 
 func _ready() -> void:
+	if physics_ball == null:
+		physics_ball = $"../.." as RigidBody3D
+
+	if physics_ball != null:
+		add_exception(physics_ball)
+
 	enabled = true
+	rest_length = suspension_length
+	_update_ray_length()
+	set_physics_process(active)
 
 
-func _physics_process(delta: float) -> void:
+func _process(_delta: float) -> void:
+	if Engine.is_editor_hint():
+		_update_ray_length()
+
+
+func _physics_process(_delta: float) -> void:
+	if Engine.is_editor_hint():
+		return
+
+	if active == false:
+		return
+
 	if physics_ball == null:
 		return
 
@@ -29,36 +77,34 @@ func _physics_process(delta: float) -> void:
 	if not is_colliding():
 		return
 
-	var ray_position := global_position
-	var hit_position := get_collision_point()
+	var p1: Vector3 = global_position
+	var hit_point: Vector3 = get_collision_point()
+	var collision_normal: Vector3 = get_collision_normal().normalized()
 
-	var distance_to_ground := ray_position.distance_to(hit_position)
+	var current_length: float = p1.distance_to(hit_point)
+	var x: float = current_length - rest_length
 
-	var compression := rest_distance - distance_to_ground
+	# Hooke's law force
+	var f: float = -k * x
 
-	if compression <= 0.0:
-		return
+	# Add damping based on velocity at the hit point
+	var point_vel: Vector3 = get_point_velocity(hit_point)
+	f += -damping * point_vel.dot(collision_normal)
 
-	var force_direction := Vector3.UP
+	# Suspension should only push, not pull down
+	f = clamp(f, 0.0, max_force)
 
-	var point_velocity := get_point_velocity(ray_position)
-	var vertical_speed := point_velocity.dot(force_direction)
+	# Final force direction is aligned with collision normal
+	var force: Vector3 = collision_normal * f
 
-	var spring_force := compression * spring_strength
-	var damping_force := vertical_speed * damping
-
-	var final_force_amount := spring_force - damping_force
-
-	final_force_amount = clamp(final_force_amount, 0.0, max_force)
-
-	var final_force := force_direction * final_force_amount
-
-	var force_position := ray_position - physics_ball.global_position
-
-	physics_ball.apply_force(final_force, force_position)
+	# Apply force at the hit point
+	physics_ball.apply_force(force, hit_point - physics_ball.global_position)
 
 
-func get_point_velocity(world_point: Vector3) -> Vector3:
-	var offset_from_center := world_point - physics_ball.global_position
+func _update_ray_length() -> void:
+	target_position = Vector3(0.0, -suspension_length, 0.0)
+	rest_length = suspension_length
 
-	return physics_ball.linear_velocity + physics_ball.angular_velocity.cross(offset_from_center)
+
+func get_point_velocity(point: Vector3) -> Vector3:
+	return physics_ball.linear_velocity + physics_ball.angular_velocity.cross(point - physics_ball.global_position)
