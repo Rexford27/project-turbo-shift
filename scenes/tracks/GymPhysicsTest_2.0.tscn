@@ -39,9 +39,39 @@ material = SubResource("StandardMaterial3D_p6q60")
 left_to_right = 0.0
 size = Vector3(25, 4, 25)
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_hknvn"]
+[sub_resource type="BoxMesh" id="BoxMesh_j7m0c"]
+size = Vector3(25, 0.1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_6hb1y"]
+size = Vector3(25, 0.2, 1)
+
+[sub_resource type="PrismMesh" id="PrismMesh_j7m0c"]
 material = ExtResource("2_6hb1y")
-height = 12.0
+left_to_right = 0.0
+size = Vector3(25, 12, 25)
+
+[sub_resource type="BoxMesh" id="BoxMesh_7cjet"]
+size = Vector3(70, 12, 25)
+
+[sub_resource type="PrismMesh" id="PrismMesh_24o44"]
+material = ExtResource("2_6hb1y")
+left_to_right = 0.0
+size = Vector3(25, 9, 25)
+
+[sub_resource type="PrismMesh" id="PrismMesh_adigl"]
+material = ExtResource("2_6hb1y")
+left_to_right = 0.0
+size = Vector3(25, 9, 25)
+
+[sub_resource type="PrismMesh" id="PrismMesh_6hb1y"]
+material = ExtResource("2_6hb1y")
+left_to_right = 0.0
+size = Vector3(25, 4, 25)
+
+[sub_resource type="PrismMesh" id="PrismMesh_hknvn"]
+material = ExtResource("2_6hb1y")
+left_to_right = 0.0
+size = Vector3(25, 4, 25)
 
 [node name="GymPhysicsTest" type="Node3D" unique_id=579894884]
 
@@ -63,7 +93,7 @@ size = Vector3(25, 1, 25)
 material = ExtResource("1_arxl4")
 
 [node name="large_building_01" type="CSGBox3D" parent="track" unique_id=92333603]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 99.66752, 5.5473166, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 99.66752, 5.5473166, -5)
 use_collision = true
 size = Vector3(25, 10.357544, 25)
 material = ExtResource("1_arxl4")
@@ -142,140 +172,153 @@ cross_amplitude = 0.082
 [node name="suspension_test_01" type="Node3D" parent="Props_Static" unique_id=1101068865]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 1, 0)
 
-[node name="CSGCylinder3D" type="CSGMesh3D" parent="Props_Static/suspension_test_01" unique_id=1407982791]
-transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 6, -0.8, 0)
+[node name="suspension_plate1" type="CSGMesh3D" parent="Props_Static/suspension_test_01" unique_id=711345133]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 use_collision = true
-mesh = SubResource("CapsuleMesh_hknvn")
+mesh = SubResource("BoxMesh_j7m0c")
+material = ExtResource("2_6hb1y")
 
-[node name="CSGCylinder3D2" type="CSGMesh3D" parent="Props_Static/suspension_test_01" unique_id=1981619178]
-transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 6, -0.8, -1)
+[node name="suspension_plate2" type="CSGMesh3D" parent="Props_Static/suspension_test_01" unique_id=2049651598]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 2)
 use_collision = true
-mesh = SubResource("CapsuleMesh_hknvn")
+mesh = SubResource("BoxMesh_j7m0c")
+material = ExtResource("2_6hb1y")
 
-[node name="CSGCylinder3D3" type="CSGMesh3D" parent="Props_Static/suspension_test_01" unique_id=1676377496]
-transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 6, -0.8, -2)
+[node name="suspension_plate3" type="CSGMesh3D" parent="Props_Static/suspension_test_01" unique_id=1536854640]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 4)
 use_collision = true
-mesh = SubResource("CapsuleMesh_hknvn")
+mesh = SubResource("BoxMesh_j7m0c")
+material = ExtResource("2_6hb1y")
 
-[node name="CSGCylinder3D4" type="CSGMesh3D" parent="Props_Static/suspension_test_01" unique_id=2130149805]
-transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 6, -0.8, -3)
+[node name="suspension_plate4" type="CSGMesh3D" parent="Props_Static/suspension_test_01" unique_id=663499716]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 6)
 use_collision = true
-mesh = SubResource("CapsuleMesh_hknvn")
+mesh = SubResource("BoxMesh_j7m0c")
+material = ExtResource("2_6hb1y")
 
-[node name="suspension_test_02" type="Node3D" parent="Props_Static" unique_id=1496295342]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 1, -9)
+[node name="suspension_test_02" type="Node3D" parent="Props_Static" unique_id=1270987638]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50, 1, 0)
 
-[node name="CSGCylinder3D" type="CSGMesh3D" parent="Props_Static/suspension_test_02" unique_id=1574269234]
-transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 6, -0.8, 0)
+[node name="suspension_plate1" type="CSGMesh3D" parent="Props_Static/suspension_test_02" unique_id=1580363746]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.39999998, 0)
 use_collision = true
-mesh = SubResource("CapsuleMesh_hknvn")
+mesh = SubResource("BoxMesh_6hb1y")
+material = ExtResource("2_6hb1y")
 
-[node name="CSGCylinder3D2" type="CSGMesh3D" parent="Props_Static/suspension_test_02" unique_id=1799413864]
-transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 6, -0.8, -1)
+[node name="suspension_plate2" type="CSGMesh3D" parent="Props_Static/suspension_test_02" unique_id=80076381]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.39999998, 2)
 use_collision = true
-mesh = SubResource("CapsuleMesh_hknvn")
+mesh = SubResource("BoxMesh_6hb1y")
+material = ExtResource("2_6hb1y")
 
-[node name="CSGCylinder3D3" type="CSGMesh3D" parent="Props_Static/suspension_test_02" unique_id=1116704935]
-transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 6, -0.8, -2)
+[node name="suspension_plate3" type="CSGMesh3D" parent="Props_Static/suspension_test_02" unique_id=165454735]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.39999998, 4)
 use_collision = true
-mesh = SubResource("CapsuleMesh_hknvn")
+mesh = SubResource("BoxMesh_6hb1y")
+material = ExtResource("2_6hb1y")
 
-[node name="CSGCylinder3D4" type="CSGMesh3D" parent="Props_Static/suspension_test_02" unique_id=2082442509]
-transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 6, -0.8, -3)
+[node name="suspension_plate4" type="CSGMesh3D" parent="Props_Static/suspension_test_02" unique_id=169315120]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.39999998, 6)
 use_collision = true
-mesh = SubResource("CapsuleMesh_hknvn")
+mesh = SubResource("BoxMesh_6hb1y")
+material = ExtResource("2_6hb1y")
 
-[node name="suspension_test_03" type="Node3D" parent="Props_Static" unique_id=1164447729]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 1, 29)
+[node name="obsticle" type="Node3D" parent="Props_Static" unique_id=1747065973]
 
-[node name="CSGCylinder3D" type="CSGMesh3D" parent="Props_Static/suspension_test_03" unique_id=1309014816]
-transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 6, -0.8, 8)
+[node name="ramp_07" type="CSGMesh3D" parent="Props_Static/obsticle" unique_id=1186168345]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 87.26723, 6.579007, 26.704605)
 use_collision = true
-mesh = SubResource("CapsuleMesh_hknvn")
+mesh = SubResource("PrismMesh_j7m0c")
 
-[node name="CSGCylinder3D2" type="CSGMesh3D" parent="Props_Static/suspension_test_03" unique_id=67384766]
-transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 6, -0.8, 5)
+[node name="24x12_block" type="CSGBox3D" parent="Props_Static/obsticle/ramp_07" unique_id=1299921554]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 0, 0)
+size = Vector3(25, 12, 25)
+material = ExtResource("2_6hb1y")
+
+[node name="24x12_block2" type="CSGBox3D" parent="Props_Static/obsticle/ramp_07" unique_id=63843745]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50, 0, 0)
+size = Vector3(25, 12, 25)
+material = ExtResource("2_6hb1y")
+
+[node name="24x12_block3" type="CSGBox3D" parent="Props_Static/obsticle/ramp_07" unique_id=1476987564]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -75, 0, 0)
+size = Vector3(25, 12, 25)
+material = ExtResource("2_6hb1y")
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="Props_Static/obsticle/ramp_07" unique_id=1213132329]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -100, 0, 0)
+mesh = SubResource("PrismMesh_j7m0c")
+
+[node name="hole" type="CSGMesh3D" parent="Props_Static/obsticle/ramp_07" unique_id=1970696929]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50, -1, 0)
+operation = 2
+mesh = SubResource("BoxMesh_7cjet")
+
+[node name="obsticle2" type="Node3D" parent="Props_Static" unique_id=861717975]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 42)
+
+[node name="ramp_07" type="CSGMesh3D" parent="Props_Static/obsticle2" unique_id=1906687542]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 87.26723, 4.879007, 9.704605)
 use_collision = true
-mesh = SubResource("CapsuleMesh_hknvn")
+mesh = SubResource("PrismMesh_24o44")
 
-[node name="CSGCylinder3D3" type="CSGMesh3D" parent="Props_Static/suspension_test_03" unique_id=1660636179]
-transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 6, -0.8, 1)
+[node name="24x12_block" type="CSGBox3D" parent="Props_Static/obsticle2/ramp_07" unique_id=544849097]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, -4.7683716e-07, 0)
+size = Vector3(25, 9, 25)
+material = ExtResource("2_6hb1y")
+
+[node name="24x12_block2" type="CSGBox3D" parent="Props_Static/obsticle2/ramp_07" unique_id=1809704851]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50, -4.7683716e-07, 0)
+size = Vector3(25, 9, 25)
+material = ExtResource("2_6hb1y")
+
+[node name="24x12_block3" type="CSGBox3D" parent="Props_Static/obsticle2/ramp_07" unique_id=800793033]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -75, -4.7683716e-07, 0)
+size = Vector3(25, 9, 25)
+material = ExtResource("2_6hb1y")
+
+[node name="hole" type="CSGMesh3D" parent="Props_Static/obsticle2/ramp_07" unique_id=2123397565]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50, -2.4, 0)
+operation = 2
+mesh = SubResource("BoxMesh_7cjet")
+
+[node name="ramp_07" type="CSGMesh3D" parent="Props_Static/obsticle2/ramp_07" unique_id=317886453]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -100, 0, 0)
+mesh = SubResource("PrismMesh_adigl")
+
+[node name="ramp_small" type="CSGMesh3D" parent="Props_Static/obsticle2" unique_id=149592130]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 87.26723, 2.4790068, 34.704605)
 use_collision = true
-mesh = SubResource("CapsuleMesh_hknvn")
+mesh = SubResource("PrismMesh_6hb1y")
 
-[node name="CSGCylinder3D4" type="CSGMesh3D" parent="Props_Static/suspension_test_03" unique_id=1206251084]
-transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 6, -0.8, -3)
-use_collision = true
-mesh = SubResource("CapsuleMesh_hknvn")
+[node name="24x12_block" type="CSGBox3D" parent="Props_Static/obsticle2/ramp_small" unique_id=2015104210]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, -0.10000038, 0)
+size = Vector3(25, 4, 25)
+material = ExtResource("2_6hb1y")
 
-[node name="suspension_test_04" type="Node3D" parent="Props_Static" unique_id=1324433773]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36, 0.8109055, 0)
+[node name="24x12_block2" type="CSGBox3D" parent="Props_Static/obsticle2/ramp_small" unique_id=562540881]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50, -0.10000038, 0)
+size = Vector3(25, 4, 25)
+material = ExtResource("2_6hb1y")
 
-[node name="CSGCylinder3D" type="CSGMesh3D" parent="Props_Static/suspension_test_04" unique_id=1201155826]
-transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 6, -0.8, 0)
-use_collision = true
-mesh = SubResource("CapsuleMesh_hknvn")
+[node name="24x12_block3" type="CSGBox3D" parent="Props_Static/obsticle2/ramp_small" unique_id=954360912]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -75, -0.10000038, 0)
+size = Vector3(25, 4, 25)
+material = ExtResource("2_6hb1y")
 
-[node name="CSGCylinder3D2" type="CSGMesh3D" parent="Props_Static/suspension_test_04" unique_id=669027757]
-transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 6, -0.8, -1)
-use_collision = true
-mesh = SubResource("CapsuleMesh_hknvn")
+[node name="hole" type="CSGMesh3D" parent="Props_Static/obsticle2/ramp_small" unique_id=1744605469]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50, -6, 0)
+operation = 2
+mesh = SubResource("BoxMesh_7cjet")
 
-[node name="CSGCylinder3D3" type="CSGMesh3D" parent="Props_Static/suspension_test_04" unique_id=1677175292]
-transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 6, -0.8, -2)
-use_collision = true
-mesh = SubResource("CapsuleMesh_hknvn")
+[node name="ramp_07" type="CSGMesh3D" parent="Props_Static/obsticle2/ramp_small" unique_id=545436324]
+editor_description = "3 blocks at 
+"
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -100, 0, 0)
+mesh = SubResource("PrismMesh_hknvn")
 
-[node name="CSGCylinder3D4" type="CSGMesh3D" parent="Props_Static/suspension_test_04" unique_id=292369250]
-transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 6, -0.8, -3)
-use_collision = true
-mesh = SubResource("CapsuleMesh_hknvn")
-
-[node name="suspension_test_05" type="Node3D" parent="Props_Static" unique_id=605142933]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36, 0.8109055, -9)
-
-[node name="CSGCylinder3D" type="CSGMesh3D" parent="Props_Static/suspension_test_05" unique_id=1586239038]
-transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 6, -0.8, 0)
-use_collision = true
-mesh = SubResource("CapsuleMesh_hknvn")
-
-[node name="CSGCylinder3D2" type="CSGMesh3D" parent="Props_Static/suspension_test_05" unique_id=122709327]
-transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 6, -0.8, -1)
-use_collision = true
-mesh = SubResource("CapsuleMesh_hknvn")
-
-[node name="CSGCylinder3D3" type="CSGMesh3D" parent="Props_Static/suspension_test_05" unique_id=2043521686]
-transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 6, -0.8, -2)
-use_collision = true
-mesh = SubResource("CapsuleMesh_hknvn")
-
-[node name="CSGCylinder3D4" type="CSGMesh3D" parent="Props_Static/suspension_test_05" unique_id=628663163]
-transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 6, -0.8, -3)
-use_collision = true
-mesh = SubResource("CapsuleMesh_hknvn")
-
-[node name="suspension_test_06" type="Node3D" parent="Props_Static" unique_id=397198256]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36, 0.8109055, 29)
-
-[node name="CSGCylinder3D" type="CSGMesh3D" parent="Props_Static/suspension_test_06" unique_id=1138752852]
-transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 6, -0.8, 8)
-use_collision = true
-mesh = SubResource("CapsuleMesh_hknvn")
-
-[node name="CSGCylinder3D2" type="CSGMesh3D" parent="Props_Static/suspension_test_06" unique_id=1817355603]
-transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 6, -0.8, 5)
-use_collision = true
-mesh = SubResource("CapsuleMesh_hknvn")
-
-[node name="CSGCylinder3D3" type="CSGMesh3D" parent="Props_Static/suspension_test_06" unique_id=938946421]
-transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 6, -0.8, 1)
-use_collision = true
-mesh = SubResource("CapsuleMesh_hknvn")
-
-[node name="CSGCylinder3D4" type="CSGMesh3D" parent="Props_Static/suspension_test_06" unique_id=1481888789]
-transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 6, -0.8, -3)
-use_collision = true
-mesh = SubResource("CapsuleMesh_hknvn")
+[node name="read description" type="CSGBox3D" parent="Props_Static" unique_id=340122309]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37, 13, 28)
 
 [node name="Props_Physics" type="Node3D" parent="." unique_id=734582184]
 

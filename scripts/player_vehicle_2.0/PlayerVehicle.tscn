@@ -14,7 +14,7 @@
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_tniqn"]
 friction = 0.0
-bounce = 0.1
+rough = true
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ypji7"]
 radius = 1.0
@@ -25,32 +25,34 @@ height = 2.0
 
 [node name="PlayerVehicle" type="Node3D" unique_id=1241110551]
 
-[node name="GroundSensor" type="Node3D" parent="." unique_id=744806189 node_paths=PackedStringArray("alignment_ray", "ground_ray", "physics_ball", "visual_body")]
+[node name="GroundSensor" type="Node3D" parent="." unique_id=744806189 node_paths=PackedStringArray("alignment_ray", "ground_ray", "physics_ball", "visual_body", "body_to_align")]
 script = ExtResource("1_74qqn")
 alignment_ray = NodePath("AligmentRay")
 ground_ray = NodePath("groundRay")
 physics_ball = NodePath("../PhysicsBall")
 visual_body = NodePath("../PhysicsBall/VisualBody")
-align_visual_body = false
+air_align_speed = 4.0
+body_to_align = NodePath("../PhysicsBall")
 
 [node name="AligmentRay" type="RayCast3D" parent="GroundSensor" unique_id=840772657]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
-enabled = false
 target_position = Vector3(0, -30, 0)
 debug_shape_custom_color = Color(0, 0, 1, 1)
 
 [node name="groundRay" type="RayCast3D" parent="GroundSensor" unique_id=1870990184]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+target_position = Vector3(0, -1.5, 0)
 debug_shape_custom_color = Color(0, 1, 0, 1)
 debug_shape_thickness = 3
 
 [node name="PhysicsBall" type="RigidBody3D" parent="." unique_id=78308645 node_paths=PackedStringArray("stats", "visual_body", "ground_sensor")]
 physics_material_override = SubResource("PhysicsMaterial_tniqn")
-angular_damp = 0.5
+angular_damp = 2.0
 script = ExtResource("2_tniqn")
 stats = NodePath("../VehicleStats")
 visual_body = NodePath("VisualBody")
 ground_sensor = NodePath("../GroundSensor")
+wall_normal_y_limit = 0.6
 
 [node name="kart_shape" type="CollisionShape3D" parent="PhysicsBall" unique_id=2002290626]
 shape = SubResource("SphereShape3D_ypji7")
@@ -59,13 +61,12 @@ debug_color = Color(0, 1, 1, 1)
 [node name="shape_debug_mesh" type="CSGMesh3D" parent="PhysicsBall/kart_shape" unique_id=342495759]
 mesh = SubResource("SphereMesh_xu6pt")
 
-[node name="VisualBody" type="Node3D" parent="PhysicsBall" unique_id=775594157 node_paths=PackedStringArray("physics_ball", "ground_sensor")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.6100001, 0)
+[node name="VisualBody" type="Node3D" parent="PhysicsBall" unique_id=775594157 node_paths=PackedStringArray("physics_ball")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.3400002, 0)
 script = ExtResource("3_ypji7")
 physics_ball = NodePath("..")
-ground_sensor = NodePath("../../GroundSensor")
-position_offset = Vector3(0, -1.11, 0)
-enable_follow_ball = false
+position_offset = Vector3(0, -1.34, 0)
+follow_smoothly = true
 
 [node name="VisualRoot" type="Node3D" parent="PhysicsBall/VisualBody" unique_id=751289032]
 
@@ -87,46 +88,55 @@ visible = false
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, 0)
 
 [node name="SuspensionRays" type="Node3D" parent="PhysicsBall/VisualBody/VisualRoot" unique_id=218233937]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8894801, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88947994, 0)
 
 [node name="back_left" type="RayCast3D" parent="PhysicsBall/VisualBody/VisualRoot/SuspensionRays" unique_id=1736545315 node_paths=PackedStringArray("physics_ball")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, -0.19999999, -0.7)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, 0, -0.7)
+target_position = Vector3(0, -0.8, 0)
 debug_shape_custom_color = Color(1, 1, 1, 1)
 script = ExtResource("4_c7lr4")
 physics_ball = NodePath("../../../..")
-k = 55.0
-suspension_length = 1.0
+k = 50.0
+damping = 1.0
+suspension_length = 0.8
 max_force = 55.0
 
 [node name="back_right" type="RayCast3D" parent="PhysicsBall/VisualBody/VisualRoot/SuspensionRays" unique_id=2115158284 node_paths=PackedStringArray("physics_ball")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, -0.19999999, -0.7)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, 0, -0.7)
+target_position = Vector3(0, -0.8, 0)
 debug_shape_custom_color = Color(1, 1, 1, 1)
 script = ExtResource("4_c7lr4")
 physics_ball = NodePath("../../../..")
-k = 55.0
-suspension_length = 1.0
+k = 50.0
+damping = 1.0
+suspension_length = 0.8
 max_force = 55.0
 
 [node name="front_left" type="RayCast3D" parent="PhysicsBall/VisualBody/VisualRoot/SuspensionRays" unique_id=532591366 node_paths=PackedStringArray("physics_ball")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, -0.19999999, 0.7)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, 0, 0.7)
+target_position = Vector3(0, -0.8, 0)
 debug_shape_custom_color = Color(1, 1, 1, 1)
 script = ExtResource("4_c7lr4")
 physics_ball = NodePath("../../../..")
-k = 55.0
-suspension_length = 1.0
+k = 50.0
+damping = 1.0
+suspension_length = 0.8
 max_force = 55.0
 
 [node name="front_right" type="RayCast3D" parent="PhysicsBall/VisualBody/VisualRoot/SuspensionRays" unique_id=894634134 node_paths=PackedStringArray("physics_ball")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, -0.19999999, 0.7)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, 0, 0.7)
+target_position = Vector3(0, -0.8, 0)
 debug_shape_custom_color = Color(1, 1, 1, 1)
 script = ExtResource("4_c7lr4")
 physics_ball = NodePath("../../../..")
-k = 55.0
-suspension_length = 1.0
+k = 50.0
+damping = 1.0
+suspension_length = 0.8
 max_force = 55.0
 
 [node name="BuoyancyProbes" type="Node3D" parent="PhysicsBall/VisualBody/VisualRoot" unique_id=1838389753]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.22, 0)
+visible = false
 
 [node name="BuoyancyProbe" parent="PhysicsBall/VisualBody/VisualRoot/BuoyancyProbes" unique_id=1059010712 node_paths=PackedStringArray("body") instance=ExtResource("5_74qqn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, -0.90000004, -1)
@@ -166,19 +176,28 @@ current = true
 script = ExtResource("9_tniqn")
 target = NodePath("../PhysicsBall/VisualBody")
 speed_source = NodePath("../PhysicsBall")
-follow_speed = 20.0
+look_height = 3.0
+follow_speed = 10.0
+look_speed = 50.0
+idle_offset = Vector3(0, 2.3, 6)
+reverse_offset = Vector3(0, 2.2, 6)
+idle_speed_deadzone = 1.0
+speed_for_full_forward_offset = 30.0
+offset_lerp_speed = 10.0
 
 [node name="VehicleStats" type="Node" parent="." unique_id=1014325311]
 script = ExtResource("9_xu6pt")
+max_forward_speed = 29.0
 max_reverse_speed = 5.0
-max_total_speed = 70.0
-acceleration_force = 10.0
+max_total_speed = 60.0
+acceleration_force = 14.0
 reverse_force = 5.0
 brake_force = 20.0
-turn_speed = 1.4
-air_turn_speed = 1.4
+turn_speed = 1.5
+air_turn_speed = 0.0
 side_grip_force = 10.0
 ground_drag = 0.3
+air_drag = 0.3
 ground_snap_force = 10.0
 
 [node name="Node" type="Node" parent="." unique_id=812848214]

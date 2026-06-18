@@ -17,12 +17,38 @@ class_name PhysicsBallController2
 ## This stops the ball from flying upward just because the VisualBody is tilted.
 @export var align_thrust_to_ground_normal: bool = true
 
+
+@export_group("Simple Wall Fix")
+
+## Turn this on/off in the inspector.
+## This stops the physics ball from climbing walls.
+@export var prevent_wall_climb: bool = true
+
+## Ground has high Y.
+## Wall has low Y.
+## If the collision normal Y is lower than this, we treat it like a wall.
+@export var wall_normal_y_limit: float = 0.4
+
+## If true, the ball cannot move upward while touching a wall.
+@export var stop_upward_wall_velocity: bool = true
+
+## If true, the ball cannot spin while touching a wall.
+## This helps stop the sphere from rolling up the wall.
+@export var stop_wall_spin: bool = true
+
+
 var throttle: float = 0.0
 var steer: float = 0.0
+
 
 func _ready():
 	center_of_mass_mode = RigidBody3D.CENTER_OF_MASS_MODE_CUSTOM
 	center_of_mass = Vector3(0, -0.5, 0)
+
+	# Needed so _integrate_forces can read collision contacts.
+	contact_monitor = true
+	max_contacts_reported = 8
+
 
 func _physics_process(delta: float) -> void:
 	if stats == null or visual_body == null:
@@ -31,10 +57,14 @@ func _physics_process(delta: float) -> void:
 	_read_input()
 	_turn_visual_body(delta)
 	_drive()
-	_apply_side_grip() #kOnly
-	_apply_drag() #Konly
-	_snap_to_ground() #kOnly
+	_apply_side_grip()
+	_apply_drag()
+	_snap_to_ground()
 	_limit_speed()
+
+
+func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
+	_prevent_wall_climb(state)
 
 
 func _read_input() -> void:
@@ -53,7 +83,7 @@ func _turn_visual_body(delta: float) -> void:
 
 	var turn_power = stats.turn_speed
 
-	#kart only code fix later working code 
+	# Later, when you add air state:
 	#if ground_sensor != null and not ground_sensor.is_grounded:
 		#turn_power = stats.air_turn_speed
 
@@ -106,8 +136,15 @@ func _snap_to_ground() -> void:
 	if ground_sensor == null:
 		return
 
-	if ground_sensor.is_grounded:
-		apply_central_force(-ground_sensor.ground_normal * stats.ground_snap_force)
+	if not ground_sensor.is_grounded:
+		return
+
+	# Only snap to actual floor-like surfaces.
+	# If the ray hits a steep wall, do not snap into it.
+	if ground_sensor.ground_normal.y < 0.5:
+		return
+
+	apply_central_force(-ground_sensor.ground_normal * stats.ground_snap_force)
 
 
 func _limit_speed() -> void:
@@ -127,7 +164,6 @@ func _get_visual_forward() -> Vector3:
 		# The result is a forward direction that runs along the road surface.
 		forward = forward.slide(ground_sensor.ground_normal)
 	else:
-		# Old simple behavior.
 		# Keeps thrust flat on the world X/Z plane.
 		forward.y = 0.0
 
@@ -135,3 +171,40 @@ func _get_visual_forward() -> Vector3:
 		return Vector3.FORWARD
 
 	return forward.normalized()
+
+
+func _prevent_wall_climb(state: PhysicsDirectBodyState3D) -> void:
+	if not prevent_wall_climb:
+		return
+
+	var touching_wall := false
+
+	for i in range(state.get_contact_count()):
+		var local_normal := state.get_contact_local_normal(i)
+
+		# Convert the collision normal from local space to world space.
+		var world_normal := state.transform.basis * local_normal
+		world_normal = world_normal.normalized()
+
+		# Floor normal has high Y.
+		# Wall normal has low Y.
+		if abs(world_normal.y) < wall_normal_y_limit:
+			touching_wall = true
+			break
+
+	if not touching_wall:
+		return
+
+	var velocity := state.linear_velocity
+
+	# Main simple fix:
+	# If the ball touches a wall, it cannot keep upward speed.
+	# It can still slide left/right along the wall.
+	if stop_upward_wall_velocity and velocity.y > 0.0:
+		velocity.y = 0.0
+		state.linear_velocity = velocity
+
+	# Optional:
+	# Stop spin so the ball does not roll itself up the wall.
+	if stop_wall_spin:
+		state.angular_velocity = Vector3.ZERO
